@@ -1,89 +1,2121 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f0e12">
+<title>ToyGallery 2000's — Photo Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=Kanit:wght@400;500;600&family=Unbounded:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+:root{
+  --bg:#f6f5f1;--bg2:#edebe4;--card:#fff;--ink:#141218;--ink2:#3a3642;--mute:#8a8690;--line:#e4e1da;
+  --accent:#7c5cff;--accent2:#ff6fb5;--accent3:#5aa9ff;--accent-soft:#efeaff;
+  --ok:#1f9d55;--warn:#f59e0b;--bad:#e5484d;
+  --grad:linear-gradient(135deg,#ff6fb5 0%,#7c5cff 50%,#5aa9ff 100%);
+  --r:20px;--r-sm:14px;--shadow:0 24px 60px -28px rgba(30,20,60,.35);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --f-body:'Anuphan',system-ui,sans-serif;
+  --f-head:'Kanit','Anuphan',system-ui,sans-serif;
+  --f-disp:'Unbounded','Kanit',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{font-family:var(--f-body);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.container{width:min(1280px,94%);margin-inline:auto}
+section{padding:100px 0;scroll-margin-top:90px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-disp);font-size:.62rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--grad)}
+.h2{font-family:var(--f-head);font-weight:500;font-size:clamp(1.8rem,4vw,3rem);line-height:1.12;letter-spacing:-.01em;margin:.25em 0 .15em}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.muted{color:var(--mute)}
+.small{font-size:.85rem}
+.center{text-align:center}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:36px}
+.sec-desc{max-width:420px;font-size:.95rem}
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/13.2.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/13.2.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/13.2.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/13.2.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/13.2.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/13.2.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/13.2.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/13.2.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/13.2.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/13.2.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+.loader{position:fixed;inset:0;z-index:999;background:var(--ink);display:grid;place-items:center;animation:loaderOut .7s var(--ease) 1s forwards}
+.loader b{font-family:var(--f-disp);color:#fff;font-size:clamp(1rem,3vw,1.4rem);letter-spacing:.04em}
+.loader b span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.loader i{display:block;height:2px;width:140px;margin:14px auto 0;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;position:relative}
+.loader i::after{content:'';position:absolute;inset:0;background:var(--grad);animation:bar .9s var(--ease) forwards}
+@keyframes bar{from{transform:translateX(-100%)}to{transform:none}}
+@keyframes loaderOut{to{transform:translateY(-100%);visibility:hidden}}
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+.nav{position:fixed;top:12px;left:0;right:0;z-index:60;pointer-events:none}
+.nav .bar{pointer-events:auto;width:min(1280px,94%);margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 7px 7px 20px;border-radius:999px;background:rgba(255,255,255,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.7);box-shadow:0 10px 30px -18px rgba(0,0,0,.35);transition:.4s}
+.nav.scrolled .bar{background:rgba(255,255,255,.92);box-shadow:0 16px 40px -20px rgba(30,20,60,.35)}
+.logo{font-family:var(--f-disp);font-weight:700;font-size:.9rem;letter-spacing:-.01em;white-space:nowrap}
+.logo span{margin-left:6px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.menu{display:flex;align-items:center;gap:2px}
+.menu a{padding:9px 15px;border-radius:999px;font-size:.9rem;color:var(--ink2);transition:.25s}
+.menu a:hover{background:var(--bg)}
+.menu a.cta{background:var(--ink);color:#fff;margin-left:6px;font-weight:500}
+.menu a.cta:hover{background:var(--accent)}
+.burger{display:none;width:42px;height:42px;border-radius:50%;background:var(--ink);position:relative;flex:none}
+.burger i{position:absolute;left:13px;right:13px;height:2px;background:#fff;border-radius:2px;transition:.35s var(--ease)}
+.burger i:nth-child(1){top:16px}.burger i:nth-child(2){top:24px}
+.burger.on i:nth-child(1){top:20px;transform:rotate(45deg)}
+.burger.on i:nth-child(2){top:20px;transform:rotate(-45deg)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:999px;border:1.5px solid var(--ink);background:var(--ink);color:#fff;font-weight:500;font-size:.9rem;line-height:1.2;white-space:nowrap;transition:.3s var(--ease)}
+.btn:hover{transform:translateY(-2px);background:var(--accent);border-color:var(--accent);box-shadow:0 14px 30px -14px rgba(124,92,255,.75)}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.55;pointer-events:none}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{background:var(--ink);color:#fff;box-shadow:none}
+.btn.light{background:#fff;color:var(--ink);border-color:#fff}
+.btn.light:hover{background:var(--accent);color:#fff}
+.btn.glass{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.4);backdrop-filter:blur(8px)}
+.btn.glass:hover{background:#fff;color:var(--ink);border-color:#fff}
+.btn.sm{padding:8px 16px;font-size:.82rem}
+.btn.lg{padding:16px 32px;font-size:1rem}
+.btn.block{width:100%}
+.btn.ok{background:var(--ok);border-color:var(--ok)}
+.btn.ok:hover{background:#187a43;border-color:#187a43}
+.btn.warn{background:var(--warn);border-color:var(--warn);color:#1a1500}
+.btn.bad{background:var(--bad);border-color:var(--bad)}
+.spinner{display:inline-block;width:15px;height:15px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;padding:150px 0 80px;color:#fff;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:-8% 0 0;z-index:-2}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:72% center;transform:scale(1.1);filter:brightness(.55) saturate(1.08) contrast(1.02);transition:transform 2.4s var(--ease)}
+body.ready .hero-bg img{transform:scale(1)}
+.hero::after{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(55% 45% at 85% 15%,rgba(167,139,250,.38),transparent 70%),radial-gradient(40% 40% at 10% 90%,rgba(255,111,181,.25),transparent 70%),linear-gradient(180deg,rgba(12,10,20,.15),rgba(12,10,20,.68))}
+.hero .eyebrow{color:rgba(255,255,255,.85)}
+.hero h1{font-family:var(--f-head);font-weight:500;font-size:clamp(2.4rem,7vw,5.5rem);line-height:1.06;letter-spacing:-.02em;margin:16px 0 18px}
+.hero h1 em{font-family:var(--f-disp);font-style:normal;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{max-width:520px;color:rgba(255,255,255,.82);font-size:1rem;margin-bottom:28px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+.rise{opacity:0;transform:translateY(24px);animation:rise 1s var(--ease) forwards;animation-delay:var(--d,1.1s)}
+@keyframes rise{to{opacity:1;transform:none}}
+.scroll-ind{position:absolute;right:4%;bottom:80px;font-family:var(--f-disp);font-size:.58rem;letter-spacing:.3em;writing-mode:vertical-rl;display:flex;align-items:center;gap:12px;opacity:.7}
+
+.marquee{background:var(--ink);color:#fff;overflow:hidden;padding:14px 0}
+.marquee .track{display:flex;width:max-content;animation:marq 28s linear infinite}
+.marquee span{font-family:var(--f-disp);font-size:.78rem;letter-spacing:.05em;padding:0 18px;white-space:nowrap}
+.marquee span.g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+.stats{padding:60px 0;border-bottom:1px solid var(--line)}
+.stats .container{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:center}
+.stat b{display:block;font-family:var(--f-disp);font-weight:700;font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.03em}
+.stat span{font-size:.9rem;color:var(--mute)}
+
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
+.js .reveal.in{opacity:1;transform:none}
+
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:8px 18px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-size:.86rem;font-weight:500;transition:.25s}
+.chip:hover{border-color:#b5b0a5}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+.gallery{columns:3 280px;column-gap:16px}
+.g-item{break-inside:avoid;margin-bottom:16px;position:relative;overflow:hidden;border-radius:var(--r);background:var(--bg2);cursor:zoom-in;transition:opacity .35s,transform .35s var(--ease)}
+.g-item img{width:100%;display:block;opacity:0;transition:opacity .6s,transform 1.2s var(--ease)}
+.g-item img.ok{opacity:1}
+.g-item:hover img{transform:scale(1.05)}
+.g-item .cap{position:absolute;left:10px;right:10px;bottom:10px;padding:12px 16px;border-radius:12px;color:#fff;background:rgba(20,18,24,.5);backdrop-filter:blur(10px);font-weight:500;opacity:0;transform:translateY(8px);transition:.4s}
+.g-item .cap small{display:block;font-family:var(--f-disp);font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;opacity:.85;margin-bottom:2px}
+.g-item:hover .cap{opacity:1;transform:none}
+.g-item.hide{display:none}
+@media (hover:none){.g-item .cap{opacity:1;transform:none;padding:10px 14px;font-size:.85rem}}
+
+.lightbox{position:fixed;inset:0;z-index:200;background:rgba(12,10,18,.95);display:grid;place-items:center;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.lightbox.open{opacity:1;visibility:visible}
+.lightbox img{max-width:88vw;max-height:80vh;width:auto;border-radius:12px;opacity:0;transform:scale(.96);transition:opacity .35s,transform .5s var(--ease)}
+.lightbox img.on{opacity:1;transform:none}
+.lb-btn{position:absolute;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:1.2rem;display:grid;place-items:center}
+.lb-btn:hover{background:rgba(255,255,255,.28)}
+.lb-prev{left:3%}.lb-next{right:3%}.lb-close{top:20px;right:3%}
+.lb-cap{position:absolute;bottom:24px;color:#fff;font-size:.88rem;background:rgba(255,255,255,.1);padding:8px 18px;border-radius:999px}
+
+.pkgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.pkg{position:relative;display:flex;flex-direction:column;padding:30px 26px;border-radius:24px;background:#fff;border:1.5px solid var(--line);transition:.4s var(--ease)}
+.pkg:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.pkg h3{font-family:var(--f-head);font-weight:500;font-size:1.2rem;margin-top:8px}
+.pkg .price{font-family:var(--f-disp);font-weight:700;font-size:1.9rem;letter-spacing:-.03em;margin:8px 0 2px}
+.pkg .price small{font-family:var(--f-body);font-weight:400;font-size:.82rem;color:var(--mute);letter-spacing:0}
+.pkg ul{list-style:none;margin:14px 0 24px;flex:1;font-size:.9rem;color:var(--ink2)}
+.pkg li{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.pkg li::before{content:'✦';color:var(--accent);font-size:.8rem;line-height:1.8}
+.pkg.featured{color:#fff;border-color:transparent;background:linear-gradient(var(--ink),var(--ink)) padding-box,var(--grad) border-box}
+.pkg.featured li{color:#c9c6d1;border-color:#2c2934}
+.pkg.featured .btn{background:#fff;color:var(--ink);border-color:#fff}
+.pkg.featured .btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tag{position:absolute;top:16px;right:16px;font-family:var(--f-disp);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--grad);color:#fff}
+
+.booking-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:24px;align-items:start}
+.step-card{background:#fff;border:1.5px solid var(--line);border-radius:var(--r);padding:24px;margin-bottom:14px}
+.step-h{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}
+.step-h .num{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-disp);font-size:.75rem;font-weight:700;color:#fff;background:var(--grad)}
+.step-h h3{font-family:var(--f-head);font-weight:500;font-size:1.08rem;line-height:1.3}
+.step-h p{font-size:.82rem;color:var(--mute)}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt label{position:relative;display:flex;flex-direction:column;gap:2px;padding:13px 44px 13px 15px;border:1.5px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;font-weight:500;font-size:.9rem;transition:.25s}
+.opt label small{font-weight:400;color:var(--mute);font-size:.76rem}
+.opt label::after{content:'';position:absolute;right:13px;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:50%;border:1.5px solid #d6d2dd;background:#fff center/12px no-repeat;transition:.25s}
+.opt input[type=checkbox]+label::after{border-radius:6px}
+.opt label:hover{border-color:#c4bed6;transform:translateY(-1px)}
+.opt input:checked+label{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 10px 22px -14px rgba(124,92,255,.8)}
+.opt input:checked+label::after{border-color:var(--accent);background-color:var(--accent);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E")}
+.opt input:disabled+label{opacity:.45;cursor:not-allowed;transform:none;background:repeating-linear-gradient(45deg,#fff 0 6px,#f3f1ec 6px 12px)}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.field label{font-size:.82rem;font-weight:500;color:var(--ink2)}
+.field label .req{color:var(--bad)}
+.field .msg{display:none;font-size:.76rem;color:var(--bad)}
+.field.err .msg{display:block}
+.field.err input{border-color:var(--bad);animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+input,select,textarea{width:100%;padding:12px 15px;border:1.5px solid var(--line);border-radius:11px;background:#fff;font-size:.96rem;outline:none;transition:.25s}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+textarea{resize:vertical;min-height:80px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.hint{font-size:.78rem;color:var(--mute);margin-top:6px}
+.summary{position:sticky;top:90px;padding:26px;border-radius:var(--r);color:#fff;background:radial-gradient(120% 80% at 100% 0,rgba(167,139,250,.38),transparent 60%),radial-gradient(80% 60% at 0 100%,rgba(255,111,181,.22),transparent 60%),var(--ink);box-shadow:var(--shadow)}
+.summary .eyebrow{color:#a9a5b3;margin-bottom:12px}
+.sum-line{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:.9rem}
+.sum-line span:last-child{white-space:nowrap}
+.sum-line.meta-line{color:#bdb9c7;font-size:.84rem}
+.sum-line.disc-line{color:#6ee7b7}
+.sum-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px}
+.sum-total b{font-family:var(--f-disp);font-size:1.9rem;letter-spacing:-.03em}
+.sum-dep{font-size:.8rem;color:#bdb9c7;margin-top:6px}
+.sum-dep b{color:#fff}
+.promo-row{display:flex;gap:8px;align-items:center}
+.promo-row input{text-transform:uppercase}
+
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.panel{background:#fff;border:1.5px solid var(--line);border-radius:var(--r);padding:24px}
+.panel h3{font-family:var(--f-head);font-weight:500;font-size:1.12rem}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.cal-head h4{font-family:var(--f-head);font-weight:500;font-size:1.05rem}
+.icon-btn{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);font-size:1.05rem;transition:.25s}
+.icon-btn:hover{background:var(--ink);color:#fff}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.cal-grid.swap{animation:up .4s var(--ease)}
+.dow{font-size:.72rem;color:var(--mute);font-weight:500;padding-bottom:4px}
+.day{aspect-ratio:1;display:grid;place-items:center;border-radius:12px;font-size:.88rem;position:relative;transition:.2s;background:transparent;border:0}
+.day:hover{background:var(--bg)}
+.day:disabled{color:#cfccd4;cursor:default}
+.day.partial::after{content:'';position:absolute;bottom:10%;width:5px;height:5px;border-radius:50%;background:#f59e0b}
+.day.full{background:#ffe9ea;color:#c4323a;font-weight:600}
+.day.today{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.day.sel{background:var(--ink)!important;color:#fff!important}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.75rem;color:var(--mute);margin-top:14px}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.day-info{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.day-info:empty{display:none}
+.day-info h4{font-family:var(--f-head);font-weight:500;margin-bottom:8px}
+.slot-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:.88rem}
+.lookup{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;margin:14px 0 16px}
+.badge{display:inline-block;font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:999px;white-space:nowrap}
+.s-pending{background:#fff4d6;color:#8a5a00}
+.s-confirmed{background:#dcf5e5;color:#17703e}
+.s-done{background:#e1ecff;color:#2848a0}
+.s-cancelled{background:#ffe5e6;color:#b4232c}
+.bk-card{border:1.5px solid var(--line);border-radius:18px;padding:20px;background:var(--bg);animation:up .5s var(--ease);margin-bottom:12px}
+.bk-card header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.bk-card header strong{font-family:var(--f-disp);font-size:.86rem}
+.bk-card p{font-size:.88rem;color:var(--ink2);margin-bottom:4px}
+.bk-card .pay{margin-top:14px}
+.bk-card .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.bk-card .links a{padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid var(--line);font-size:.82rem;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.bk-card .links a:hover{border-color:var(--accent);background:var(--accent-soft)}
+.empty{text-align:center;color:var(--mute);padding:30px 0;font-size:.9rem}
+
+.pay{display:grid;grid-template-columns:130px 1fr;gap:18px;align-items:center;padding:14px;border:1.5px solid var(--line);border-radius:16px;background:#fff}
+.pay-qr{width:130px;aspect-ratio:1;border-radius:12px;border:1.5px solid var(--line);background:#fff;display:grid;place-items:center;overflow:hidden;padding:5px}
+.pay-qr img{width:100%;height:100%;object-fit:contain}
+.pay-qr-empty{font-size:.72rem;color:var(--mute);text-align:center;line-height:1.5;padding:8px}
+.pay-amt{font-family:var(--f-disp);font-weight:700;font-size:1.35rem;letter-spacing:-.02em;margin-bottom:4px}
+.pay-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:.9rem;margin:2px 0}
+.pay-row.acc b{font-family:var(--f-disp);font-size:.92rem;letter-spacing:.02em}
+.copy{border:1.5px solid var(--line);background:var(--bg);border-radius:999px;padding:3px 10px;font-size:.72rem;transition:.25s}
+.copy:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pay-note{font-size:.78rem;color:var(--mute);margin-top:6px}
+.lbl{display:block;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:2px}
+
+.is-admin .marquee,.is-admin .fab{display:none!important}
+.admin-wrap{padding:100px 0 70px;min-height:85vh}
+.login{display:grid;place-items:center;min-height:60vh;padding-top:40px}
+.login-card{width:min(440px,100%);background:#fff;border:1.5px solid var(--line);border-radius:28px;padding:34px;box-shadow:var(--shadow);animation:up .6s var(--ease)}
+.form-err{color:var(--bad);font-size:.84rem;min-height:1.3em;margin-bottom:10px}
+.demo-hint{margin-top:16px;padding:14px;border-radius:14px;background:var(--accent-soft);font-size:.84rem;color:var(--ink2);line-height:1.6}
+.demo-hint b{display:block;margin-bottom:4px}
+.back-link{display:block;text-align:center;margin-top:18px;font-size:.86rem;color:var(--mute)}
+.back-link:hover{color:var(--ink)}
+.admin-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.admin-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.db-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;font-size:.78rem;font-weight:600;background:#fff;border:1.5px solid var(--line)}
+.db-pill i{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.db-pill.cloud i{background:var(--accent)}
+.seg{display:inline-flex;gap:4px;padding:5px;border-radius:999px;background:#fff;border:1.5px solid var(--line);margin-bottom:22px;flex-wrap:wrap}
+.seg button{padding:10px 18px;border-radius:999px;font-weight:500;font-size:.86rem;color:var(--ink2);transition:.3s}
+.seg button.on{background:var(--ink);color:#fff}
+.dash-tab{animation:up .5s var(--ease)}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
+.kpi{background:#fff;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:20px;animation:up .5s var(--ease) both}
+.kpi b{display:block;font-family:var(--f-disp);font-size:1.8rem;letter-spacing:-.03em;margin-bottom:2px}
+.kpi span{font-size:.84rem;color:var(--mute)}
+.kpi.hl{background:var(--ink);color:#fff;border-color:var(--ink)}
+.kpi.hl span{color:#bdb9c3}
+.kpi.accent{background:linear-gradient(135deg,#7c5cff,#ff6fb5);color:#fff;border:0}
+.kpi.accent span{color:rgba(255,255,255,.85)}
+.dashboard-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;margin-bottom:24px}
+.card{background:#fff;border:1.5px solid var(--line);border-radius:var(--r);padding:24px;animation:up .5s var(--ease) both}
+.card h3{font-family:var(--f-head);font-weight:500;font-size:1.1rem;margin-bottom:14px}
+.card h4{font-family:var(--f-head);font-weight:500;font-size:1rem;margin-bottom:10px}
+.mini-list{display:flex;flex-direction:column;gap:10px}
+.mini-item{padding:12px 14px;border-radius:12px;background:var(--bg);font-size:.88rem;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.mini-item strong{display:block;font-size:.92rem}
+.mini-item small{color:var(--mute)}
+.chart{height:140px;display:flex;align-items:flex-end;gap:8px;padding-top:20px}
+.chart-bar{flex:1;border-radius:8px 8px 0 0;min-height:4px;position:relative;opacity:.85;transition:.3s}
+.chart-bar:hover{opacity:1}
+.chart-bar span{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font-size:.65rem;color:var(--mute);white-space:nowrap;margin-bottom:4px}
+
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.toolbar input{max-width:300px;padding:10px 16px;border-radius:999px}
+.table-wrap{overflow-x:auto;background:#fff;border:1.5px solid var(--line);border-radius:var(--r)}
+.dash{width:100%;border-collapse:collapse;font-size:.88rem}
+.dash th,.dash td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+.dash th{font-size:.72rem;font-weight:600;color:var(--mute);letter-spacing:.04em;text-transform:uppercase;background:#fbfaf8}
+.dash tbody tr{transition:background .2s}
+.dash tbody tr:hover{background:#faf9f6}
+.dash tbody tr:last-child td{border-bottom:0}
+.dash td strong{font-family:var(--f-disp);font-size:.76rem}
+.dash select{width:auto;padding:6px 12px;font-size:.82rem;border-radius:999px;border-width:1px}
+.dash .acts{display:flex;gap:6px;flex-wrap:wrap}
+.link-btn{font-size:.8rem;font-weight:500;padding:6px 10px;border-radius:8px;transition:.2s;border:1px solid transparent}
+.link-btn:hover{background:var(--bg);border-color:var(--line)}
+.link-btn.slip-btn{background:#dcf5e5;color:#17703e}
+.link-btn.del{color:var(--bad)}
+.r{text-align:right!important}
+
+.drop{display:flex;gap:16px;align-items:center;padding:14px;border:1.5px dashed #c4bed6;border-radius:16px;background:var(--bg);cursor:pointer;transition:.25s}
+.drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.drop .thumb{width:84px;height:84px;flex:none;border-radius:12px;background:#fff;border:1.5px solid var(--line);display:grid;place-items:center;overflow:hidden;font-size:.68rem;color:var(--mute);text-align:center}
+.drop .thumb img{width:100%;height:100%;object-fit:cover}
+.drop b{display:block;font-weight:600}
+.form-actions{display:flex;justify-content:flex-end;align-items:center;gap:14px;margin-top:16px;flex-wrap:wrap}
+.dirty{font-size:.82rem;color:#b7791f}
+.gallery-manager{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-top:16px}
+.gm-item{position:relative;border-radius:14px;overflow:hidden;background:var(--bg2);aspect-ratio:1/1.15;border:1.5px solid var(--line)}
+.gm-item img{width:100%;height:70%;object-fit:cover}
+.gm-item .info{padding:10px;font-size:.78rem}
+.gm-item .info b{display:block;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gm-item .del{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(229,72,77,.9);color:#fff;font-size:.8rem;display:grid;place-items:center;opacity:0;transition:.25s}
+.gm-item:hover .del{opacity:1}
+.empty-state{text-align:center;padding:40px 0;color:var(--mute)}
+
+.modal{position:fixed;inset:0;z-index:150;display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;background:rgba(18,14,30,.45);backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.modal.open{opacity:1;visibility:visible}
+.modal-box{position:relative;background:#fff;width:min(900px,100%);margin:auto;border-radius:26px;box-shadow:0 40px 80px -30px rgba(0,0,0,.45);transform:translateY(30px) scale(.98);transition:transform .55s var(--ease)}
+.modal.open .modal-box{transform:none}
+.modal-box.small{width:min(520px,100%);padding:36px 28px 28px;text-align:center}
+.modal-box.small-left{text-align:left}
+.modal-x{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;background:var(--bg);font-size:.9rem}
+.modal-x:hover{background:var(--ink);color:#fff}
+.ok-icon{width:68px;height:68px;margin:0 auto 14px;border-radius:50%;background:var(--grad);padding:4px}
+.ok-icon svg{width:100%;height:100%}
+.ok-icon circle{fill:#fff}
+.ok-icon path{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60}
+.modal.open .ok-icon path{animation:draw .6s .35s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.ok-id{font-family:var(--f-disp);font-weight:700;font-size:1.25rem;letter-spacing:.02em;margin:6px 0}
+.ok-acts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.doc-tools{position:sticky;top:0;z-index:2;display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:14px 20px;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1.5px solid var(--line);border-radius:26px 26px 0 0}
+.doc-tools .tabs{display:flex;padding:4px;border-radius:999px;background:var(--bg)}
+.doc-tools .tabs button{padding:8px 18px;border-radius:999px;font-size:.82rem;font-weight:500;transition:.3s}
+.doc-tools .tabs button.on{background:var(--ink);color:#fff}
+.doc-tools label{display:inline-flex;align-items:center;gap:6px;font-size:.84rem;color:var(--ink2);margin-right:6px}
+.doc-tools input[type=number]{width:110px;padding:7px 12px;font-size:.86rem;border-radius:999px}
+.doc-tools input[type=checkbox]{width:auto;accent-color:var(--accent)}
+.doc-tools .sp{flex:1}
+.doc-tools textarea{width:220px;padding:7px 10px;font-size:.78rem;border-radius:10px;resize:none;vertical-align:top}
+
+.doc{position:relative;padding:48px;font-size:.88rem;color:#222}
+.doc-head{display:flex;justify-content:space-between;gap:28px;padding-bottom:24px;border-bottom:2px solid var(--ink)}
+.doc-logo{font-family:var(--f-disp);font-weight:700;font-size:1.15rem;margin-bottom:6px}
+.doc-logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.doc-title{text-align:right}
+.doc-title h1{font-family:var(--f-head);font-weight:500;font-size:1.7rem;line-height:1.1}
+.doc-title .en{font-family:var(--f-disp);font-size:.6rem;letter-spacing:.2em;color:var(--mute);margin:4px 0 10px}
+.meta{margin-left:auto;border-collapse:collapse}
+.meta td{padding:2px 0 2px 18px;font-size:.8rem;text-align:right}
+.meta td:first-child{color:var(--mute)}
+.doc-party{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:22px 0}
+.items{width:100%;border-collapse:collapse}
+.items th{background:var(--bg);font-weight:600;font-size:.75rem;color:var(--ink2);padding:10px 12px;text-align:left}
+.items td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top}
+.items td small{display:block;color:var(--mute);font-size:.75rem}
+.doc-sum{display:flex;justify-content:space-between;gap:28px;margin-top:20px;align-items:flex-start}
+.words{flex:1;background:var(--bg);padding:12px 16px;border-radius:12px;font-size:.82rem}
+.doc-sum table{width:300px;border-collapse:collapse}
+.doc-sum td{padding:5px 0}
+.doc-sum .grand td{border-top:2px solid var(--ink);padding-top:12px;font-weight:700;font-size:1.05rem}
+.paid{margin-top:22px;padding:16px;border-radius:14px;background:#dcf5e5;color:#17703e;text-align:center;font-weight:600}
+.terms{margin-top:22px;font-size:.78rem;color:var(--mute)}
+.terms ol{padding-left:18px}
+.signs{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:54px;text-align:center;font-size:.8rem;color:var(--mute)}
+.signs div{border-top:1px solid #bbb;padding-top:8px}
+.void{position:absolute;top:42%;left:50%;transform:translate(-50%,-50%) rotate(-18deg);font-family:var(--f-disp);font-weight:700;font-size:5rem;letter-spacing:.15em;color:rgba(229,72,77,.12);pointer-events:none}
+
+.toast{position:fixed;left:50%;bottom:26px;z-index:300;transform:translate(-50%,140px);max-width:92vw;padding:13px 24px;border-radius:999px;background:var(--ink);color:#fff;font-size:.9rem;text-align:center;box-shadow:0 16px 40px -14px rgba(0,0,0,.5);transition:transform .45s var(--ease)}
+.toast.show{transform:translate(-50%,0)}
+.fab{position:fixed;right:14px;bottom:14px;z-index:110;transform:translateY(120px);transition:transform .45s var(--ease);box-shadow:0 14px 30px -12px rgba(124,92,255,.8)}
+.fab.show{transform:none}
+footer{background:var(--ink);color:#a9a5b3;padding:70px 0 32px}
+footer .big{font-family:var(--f-head);font-weight:500;font-size:clamp(1.8rem,5vw,4rem);line-height:1.1;color:#fff;margin-bottom:32px}
+footer .cols{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:.86rem;padding-top:22px;border-top:1px solid #2a2731}
+footer a:hover{color:#fff}
+
+@media (min-width:861px){.fab{display:none}}
+@media (max-width:900px){
+  .burger{display:block}
+  .menu{position:absolute;top:calc(100% + 8px);left:3%;right:3%;flex-direction:column;align-items:stretch;gap:2px;padding:10px;border-radius:22px;background:rgba(255,255,255,.97);box-shadow:var(--shadow);opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transition:.35s var(--ease)}
+  .menu.open{opacity:1;visibility:visible;transform:none}
+  .menu a{padding:14px 16px;font-size:1rem}
+  .menu a.cta{margin:6px 0 0;text-align:center}
+  .booking-grid,.check-grid,.dashboard-grid,.settings,.doc-head,.doc-sum{grid-template-columns:1fr}
+  .pay{grid-template-columns:1fr;text-align:center}
+  .pay-qr{margin:auto}
+  .summary,.card.preview{position:static}
+  .doc{padding:26px}
+  .doc-title{text-align:left}.meta{margin-left:0}.meta td{text-align:left;padding:2px 18px 2px 0}
+  .doc-sum table{width:100%}
+  .doc-party{grid-template-columns:1fr}
+  .scroll-ind{display:none}
+  .doc-tools textarea{width:100%;margin-top:6px}
+  .hero-bg img{object-position:68% center!important}
+}
+@media (max-width:560px){
+  .row,.opts,.lookup{grid-template-columns:1fr}
+  .stats .container{grid-template-columns:1fr;gap:24px}
+  .step-card,.panel,.card,.login-card{padding:18px}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .lb-prev,.lb-next{bottom:70px;top:auto}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
+@media print{
+  @page{size:A4;margin:12mm}
+  body{background:#fff}
+  body>*:not(#docModal){display:none!important}
+  #docModal{position:static!important;opacity:1!important;visibility:visible!important;padding:0!important;background:none!important;display:block!important;overflow:visible!important}
+  #docModal .modal-box{width:100%!important;transform:none!important;box-shadow:none!important;border-radius:0!important}
+  .doc-tools,.copy{display:none!important}
+  .doc{padding:0!important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="loader" aria-hidden="true"><div><b>TOYGALLERY <span>2000'S</span></b><i></i></div></div>
+
+<header class="nav" id="nav">
+  <div class="bar">
+    <a href="#top" class="logo">TOYGALLERY<span>2000'S</span></a>
+    <nav class="menu" id="menu" aria-label="เมนูหลัก">
+      <a href="#work">ผลงาน</a>
+      <a href="#packages">แพ็กเกจ</a>
+      <a href="#check">เช็คคิว</a>
+      <a href="#admin">สตูดิโอ</a>
+      <a href="#booking" class="cta">จองคิว →</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<main id="clientView">
+  <section class="hero" id="top">
+    <div class="hero-bg" id="heroBg">
+      <img src="https://lh3.googleusercontent.com/d/1a4Ze5MUWPrPvYOWIKuRv-ewFiiPwrdM0" alt="ภาพคู่บ่าวสาว" style="object-position: 72% center;" onerror="this.src='https://drive.google.com/thumbnail?id=1a4Ze5MUWPrPvYOWIKuRv-ewFiiPwrdM0&sz=w2000'">
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+    <div class="container">
+      <p class="eyebrow rise" style="--d:1.15s">Photo Studio · Nan & Bangkok · Y2K Mood</p>
+      <h1 class="rise" style="--d:1.25s">เก็บความทรงจำ<br>ให้ชัดแบบ <em>Y2K</em></h1>
+      <p class="hero-sub rise" style="--d:1.35s">สตูดิโอถ่ายภาพโทนฟิล์มยุค 2000s รับงานแต่ง พรีเวดดิ้ง งานบวช และรับปริญญา จองคิวออนไลน์แล้วได้ใบเสนอราคาทันที</p>
+      <div class="hero-cta rise" style="--d:1.45s">
+        <a href="#booking" class="btn light lg">จองคิวถ่ายภาพ →</a>
+        <a href="#work" class="btn glass lg">ดูผลงาน</a>
+      </div>
+    </div>
+    <div class="scroll-ind">SCROLL</div>
+  </section>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>WEDDING</span><span class="g">✦</span><span>PRE-WEDDING</span><span class="g">✦</span><span>ORDINATION</span><span class="g">✦</span><span>COMMENCEMENT</span><span class="g">✦</span><span class="g">TOYGALLERY 2000'S</span><span class="g">✦</span>
+      <span>WEDDING</span><span class="g">✦</span><span>PRE-WEDDING</span><span class="g">✦</span><span>ORDINATION</span><span class="g">✦</span><span>COMMENCEMENT</span><span class="g">✦</span><span class="g">TOYGALLERY 2000'S</span><span class="g">✦</span>
+    </div>
+  </div>
 
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+  <div class="stats">
+    <div class="container">
+      <div class="stat reveal"><b data-count="8">8</b><span>ปีประสบการณ์</span></div>
+      <div class="stat reveal" style="--d:.1s"><b data-count="650" data-plus="1">650+</b><span>งานที่ไว้วางใจเรา</span></div>
+      <div class="stat reveal" style="--d:.2s"><b data-count="4.9" data-dec="1">4.9</b><span>คะแนนรีวิวเฉลี่ย</span></div>
+    </div>
+  </div>
+
+  <section id="work">
+    <div class="container">
+      <div class="sec-head">
+        <div class="reveal"><p class="eyebrow">Selected Works</p><h2 class="h2">ผลงาน<span class="grad-text">ที่ผ่านมา</span></h2></div>
+        <div class="chips reveal" id="filters"></div>
+      </div>
+      <div class="gallery" id="gallery"></div>
+    </div>
+  </section>
+
+  <section id="packages" style="background:#fff">
+    <div class="container">
+      <div class="sec-head">
+        <div class="reveal"><p class="eyebrow">Packages</p><h2 class="h2">แพ็กเกจ<span class="grad-text"> & ราคา</span></h2></div>
+        <p class="sec-desc muted reveal">ราคาต่องานรวมทุกอย่าง เลือกบริการเสริมหรือใส่โค้ดส่วนลดเพิ่มได้ตอนจอง</p>
+      </div>
+      <div class="pkgs" id="pkgs"><p class="muted">กำลังโหลด...</p></div>
+    </div>
+  </section>
+
+  <section id="booking">
+    <div class="container">
+      <div class="sec-head">
+        <div class="reveal"><p class="eyebrow">Booking</p><h2 class="h2">จองคิว<span class="grad-text">ถ่ายภาพ</span></h2></div>
+        <p class="sec-desc muted reveal">4 ขั้นตอน ใช้เวลาไม่ถึง 2 นาที กดยืนยันแล้วจะได้รหัสการจอง ใบเสนอราคา และช่องทางชำระมัดจำทันที</p>
+      </div>
+      <div class="booking-grid">
+        <form id="bookForm" novalidate>
+          <div class="step-card reveal">
+            <div class="step-h"><span class="num">1</span><div><h3>เลือกแพ็กเกจ</h3><p>เลือกหมวดหมู่แล้วเลือกแพ็กเกจ 1 รายการ</p></div></div>
+            <div class="field"><label for="pkgCat">หมวดหมู่</label><select id="pkgCat"></select></div>
+            <div class="field"><label for="pkgItem">แพ็กเกจ</label><select id="pkgItem"></select></div>
+            <div class="field" id="hourWrap" hidden><label for="pkgQty">จำนวนชั่วโมง</label><input type="number" id="pkgQty" min="1" value="1"></div>
+          </div>
+          <div class="step-card reveal">
+            <div class="step-h"><span class="num">2</span><div><h3>บริการเสริม & โค้ดส่วนลด</h3><p>ไม่บังคับ เลือกได้หลายรายการ</p></div></div>
+            <div class="opts" id="addonOpts"></div>
+            <div class="field" style="margin-top:16px;margin-bottom:0">
+              <label for="fPromo">โค้ดส่วนลด (ถ้ามี)</label>
+              <div class="promo-row">
+                <input id="fPromo" placeholder="เช่น Y2K500">
+                <button type="button" class="btn sm ghost" id="applyPromoBtn">ใช้โค้ด</button>
+              </div>
+              <p class="hint" id="promoHint"></p>
+            </div>
+          </div>
+          <div class="step-card reveal">
+            <div class="step-h"><span class="num">3</span><div><h3>วันและช่วงเวลา</h3><p>ช่วงที่ถูกจองหรือวันหยุดสตูดิโอจะกดเลือกไม่ได้</p></div></div>
+            <div class="field" id="fDateWrap"><label for="fDate">วันที่ถ่ายภาพ <span class="req">*</span></label><input type="date" id="fDate"><span class="msg">กรุณาเลือกวันที่</span></div>
+            <div class="opts" id="slotOpts"></div>
+            <p class="hint" id="slotHint"></p>
+          </div>
+          <div class="step-card reveal">
+            <div class="step-h"><span class="num">4</span><div><h3>ข้อมูลผู้จอง</h3><p>ใช้เบอร์โทรนี้คู่กับรหัสการจองเพื่อเช็คสถานะ</p></div></div>
+            <div class="row">
+              <div class="field"><label for="fName">ชื่อ-นามสกุล <span class="req">*</span></label><input id="fName" autocomplete="name"><span class="msg">กรุณากรอกชื่อ</span></div>
+              <div class="field"><label for="fPhone">เบอร์โทรศัพท์ <span class="req">*</span></label><input id="fPhone" inputmode="tel" autocomplete="tel" placeholder="08xxxxxxxx"><span class="msg">กรอกเบอร์ 9–10 หลัก ขึ้นต้นด้วย 0</span></div>
+            </div>
+            <div class="row">
+              <div class="field"><label for="fEmail">อีเมล</label><input id="fEmail" type="email" autocomplete="email"><span class="msg">รูปแบบอีเมลไม่ถูกต้อง</span></div>
+              <div class="field"><label for="fLoc">สถานที่ถ่าย</label><input id="fLoc" placeholder="เช่น อ.เมือง จ.น่าน"></div>
+            </div>
+            <div class="field"><label for="fNote">รายละเอียดเพิ่มเติม</label><textarea id="fNote" rows="3" placeholder="ธีม จำนวนคน หรือสิ่งที่อยากให้เตรียม"></textarea></div>
+          </div>
+          <button class="btn block lg" type="submit" id="bookBtn">ยืนยันการจอง →</button>
+        </form>
+
+        <aside class="summary reveal" style="--d:.1s">
+          <p class="eyebrow">สรุปรายการ</p>
+          <div id="sumLines"></div>
+          <div class="sum-total"><span>ยอดรวม</span><b id="sumTotal">฿0</b></div>
+          <p class="sum-dep" id="sumDep"></p>
+          <p class="sum-dep">* ราคายังไม่รวม VAT 7% (ถ้ามี)</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="check" style="background:#fff">
+    <div class="container">
+      <div class="sec-head">
+        <div class="reveal"><p class="eyebrow">Availability</p><h2 class="h2">เช็คคิว<span class="grad-text"> & สถานะ</span></h2></div>
+      </div>
+      <div class="check-grid">
+        <div class="panel reveal">
+          <div class="cal-head">
+            <button class="icon-btn" id="calPrev">‹</button>
+            <h4 id="calTitle"></h4>
+            <button class="icon-btn" id="calNext">›</button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div class="legend">
+            <span><i style="background:#f59e0b"></i>ว่างบางช่วง</span>
+            <span><i style="background:#ffe9ea;border:1.5px solid #c4323a"></i>เต็ม / วันหยุด</span>
+            <span><i style="box-shadow:inset 0 0 0 1.5px #141218"></i>วันนี้</span>
+          </div>
+          <div class="day-info" id="dayInfo"></div>
+        </div>
+        <div class="panel reveal" style="--d:.1s">
+          <h3>ตรวจสอบการจองของคุณ</h3>
+          <p class="muted small">กรอกรหัสการจองและเบอร์โทรที่ใช้ตอนจอง</p>
+          <form class="lookup" id="lookupForm">
+            <input id="qCode" placeholder="รหัส เช่น BK-250101-A1B2C3" autocapitalize="characters">
+            <input id="qPhone" placeholder="เบอร์โทรศัพท์" inputmode="tel">
+            <button class="btn" id="qBtn">ค้นหา</button>
+          </form>
+          <div id="qResult"><p class="empty">ผลการค้นหาจะแสดงที่นี่</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<main id="adminView" hidden>
+  <div class="container admin-wrap">
+    <div class="admin-loading" id="adminLoading" hidden><span class="spinner"></span>&nbsp; กำลังตรวจสอบสิทธิ์...</div>
+
+    <section class="login" id="loginView" hidden style="padding:0">
+      <form class="login-card" id="loginForm">
+        <p class="eyebrow">Studio Portal</p>
+        <h1 class="h2" style="margin:.3em 0 .7em">เข้าสู่ระบบ<span class="grad-text">สตูดิโอ</span></h1>
+        <div class="field"><label for="lEmail">อีเมล</label><input id="lEmail" type="email" required autocomplete="username"></div>
+        <div class="field"><label for="lPass">รหัสผ่าน</label><input id="lPass" type="password" required autocomplete="current-password"></div>
+        <p class="form-err" id="loginErr"></p>
+        <button class="btn block" id="loginBtn">เข้าสู่ระบบ</button>
+        <div class="demo-hint">
+          <b>ข้อมูลเข้าสู่ระบบเริ่มต้น</b>
+          อีเมล: <code>admin@toygallery.com</code><br>
+          รหัสผ่าน: <code>toy2000</code><br>
+          <small class="muted">(เปลี่ยนรหัสผ่านได้ในแท็บตั้งค่าระบบ)</small>
+        </div>
+        <a href="#top" class="back-link">← กลับหน้าเว็บไซต์</a>
+      </form>
+    </section>
+
+    <section id="dashView" hidden style="padding:0">
+      <div class="admin-head">
+        <div>
+          <p class="eyebrow">Studio Dashboard</p>
+          <h1 class="h2" style="margin-bottom:0">จัดการ<span class="grad-text">สตูดิโอ</span></h1>
+          <p class="muted small" id="adminEmail"></p>
+        </div>
+        <div class="admin-actions">
+          <span class="db-pill cloud"><i></i><span>Firebase Firestore Online</span></span>
+          <a href="#top" class="btn sm ghost">ดูหน้าเว็บ</a>
+          <button class="btn sm ghost" id="refreshBtn">↻ รีเฟรชข้อมูล</button>
+          <button class="btn sm bad" id="logoutBtn">ออกจากระบบ</button>
+        </div>
+      </div>
+
+      <div class="seg" id="adminTabs">
+        <button class="on" data-tab="dashboard">ภาพรวม</button>
+        <button data-tab="bookings">ตารางคิวงาน</button>
+        <button data-tab="schedule">วันหยุด & คูปอง</button>
+        <button data-tab="delivery">ส่งงานลูกค้า</button>
+        <button data-tab="gallery">อัปโหลดผลงาน</button>
+        <button data-tab="payment">ตั้งค่าบัญชี</button>
+        <button data-tab="database">ตั้งค่าระบบ</button>
+      </div>
+
+      <div class="dash-tab" id="tabDashboard">
+        <div class="kpi-grid" id="kpiGrid"></div>
+        <div class="dashboard-grid">
+          <div class="card">
+            <h3>รายได้รวมตามสถานะ</h3>
+            <div class="chart" id="revenueChart"></div>
+          </div>
+          <div class="card">
+            <h3>คิวงานเร็วๆ นี้</h3>
+            <div class="mini-list" id="upcomingList"><p class="empty-state">ไม่มีคิวงานเร็วๆ นี้</p></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>คิวงานวันนี้</h3>
+          <div id="todayList"><p class="empty-state">ไม่มีคิวงานวันนี้</p></div>
+        </div>
+      </div>
+
+      <div class="dash-tab" id="tabBookings" hidden>
+        <div class="toolbar">
+          <input id="dashQ" placeholder="ค้นหา รหัส / ชื่อ / เบอร์โทร">
+          <div class="chips" id="dashFilters"></div>
+          <span style="flex:1"></span>
+          <button class="btn sm ghost" id="exportCsvBtn">⬇ ส่งออก Excel (CSV)</button>
+        </div>
+        <div class="table-wrap">
+          <table class="dash">
+            <thead><tr><th>รหัส</th><th>ลูกค้า</th><th>วันที่</th><th>ช่วงเวลา</th><th>แพ็กเกจ</th><th class="r">ยอดรวม</th><th>สถานะ</th><th>จัดการ</th></tr></thead>
+            <tbody id="dashBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="dash-tab" id="tabSchedule" hidden>
+        <div class="dashboard-grid">
+          <div class="card">
+            <h3>ล็อกวันหยุดสตูดิโอ / งดรับคิว</h3>
+            <p class="muted small" style="margin-bottom:14px">วันที่ถูกล็อกจะไม่สามารถจองได้</p>
+            <form id="blockForm" class="row" style="align-items:end;margin-bottom:16px">
+              <div class="field" style="margin:0"><label>วันที่ต้องการล็อก</label><input type="date" id="blkDate" required></div>
+              <div class="field" style="margin:0"><label>เหตุผล</label><input id="blkReason" placeholder="เช่น ออกกองต่างจังหวัด"></div>
+              <button class="btn sm" type="submit" style="grid-column:1/-1">+ ล็อกวันหยุด</button>
+            </form>
+            <div class="mini-list" id="blockList"></div>
+          </div>
+          <div class="card">
+            <h3>จัดการโค้ดส่วนลด (Promo Codes)</h3>
+            <p class="muted small" style="margin-bottom:14px">สร้างโค้ดส่วนลดให้ลูกค้ากรอกตอนจอง</p>
+            <form id="promoForm" class="row" style="align-items:end;margin-bottom:16px">
+              <div class="field" style="margin:0"><label>รหัสโค้ด</label><input id="prmCode" placeholder="เช่น Y2K500" style="text-transform:uppercase" required></div>
+              <div class="field" style="margin:0"><label>ส่วนลด (บาท)</label><input type="number" id="prmAmt" min="50" step="50" placeholder="500" required></div>
+              <button class="btn sm" type="submit" style="grid-column:1/-1">+ เพิ่มโค้ดส่วนลด</button>
+            </form>
+            <div class="mini-list" id="promoList"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-tab" id="tabDelivery" hidden>
+        <div class="card">
+          <h3>ส่งงานลูกค้า</h3>
+          <p class="muted small" style="margin-bottom:14px">แนบลิงก์ Google Drive / Google Photos ให้ลูกค้าดูในหน้าเช็คคิว</p>
+          <div id="deliveryList"><p class="empty-state">ไม่มีคิวงาน</p></div>
+        </div>
+      </div>
+
+      <div class="dash-tab" id="tabGallery" hidden>
+        <div class="card">
+          <h3>อัปโหลดผลงาน (แสดงหน้าเว็บ)</h3>
+          <p class="muted small" style="margin-bottom:14px">สามารถใช้ลิงก์รูปภาพจาก Google Drive หรืออัปโหลดไฟล์ตรงได้</p>
+          <div class="row">
+            <div class="field"><label>ชื่อผลงาน</label><input id="gmTitle" placeholder="เช่น Digital Love 2000"></div>
+            <div class="field"><label>หมวดหมู่</label><select id="gmCat">
+              <option value="wedding">งานแต่ง</option>
+              <option value="prewedding">พรีเวดดิ้ง</option>
+              <option value="graduation">รับปริญญา</option>
+              <option value="portrait">โปรไฟล์</option>
+            </select></div>
+          </div>
+          <div class="field"><label>ลิงก์รูปภาพ (URL จาก Google Drive หรือเว็บอื่น)</label><input id="gmUrl" placeholder="https://lh3.googleusercontent.com/d/..."></div>
+          <div class="form-actions"><button class="btn" id="gmAddUrl">เพิ่มผลงานจากลิงก์</button></div>
+        </div>
+        <div class="card" style="margin-top:20px">
+          <h3>ผลงานทั้งหมด</h3>
+          <div class="gallery-manager" id="gmList"><p class="empty-state" style="grid-column:1/-1">ยังไม่มีผลงาน</p></div>
+        </div>
+      </div>
+
+      <div class="dash-tab" id="tabPayment" hidden>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+          <form class="card" id="payForm" novalidate>
+            <h3>ตั้งค่าระบบบัญชีรับเงิน</h3>
+            <p class="muted small" style="margin-bottom:18px">ข้อมูลนี้จะแสดงให้ลูกค้าเห็นหลังจองสำเร็จ</p>
+            <div class="field"><label for="pBank">ธนาคาร</label><input id="pBank" list="bankList" placeholder="พิมพ์หรือเลือกธนาคาร"></div>
+            <datalist id="bankList">
+              <option value="ธนาคารกสิกรไทย"><option value="ธนาคารไทยพาณิชย์"><option value="ธนาคารกรุงเทพ"><option value="ธนาคารกรุงไทย"><option value="ธนาคารออมสิน">
+            </datalist>
+            <div class="row">
+              <div class="field"><label for="pAccNo">เลขที่บัญชี</label><input id="pAccNo" inputmode="numeric" placeholder="020349396323"></div>
+              <div class="field"><label for="pAccName">ชื่อบัญชีรับเงิน</label><input id="pAccName" placeholder="ชื่อตามหน้าสมุดบัญชี"></div>
+            </div>
+            <div class="field"><label for="pPP">เบอร์พร้อมเพย์</label><input id="pPP" inputmode="numeric" placeholder="เบอร์โทร"></div>
+            <div class="field"><label for="pNote">ข้อความแนะนำการโอน</label><textarea id="pNote" rows="2" placeholder="โอนแล้วส่งสลิป..."></textarea></div>
+            <div class="form-actions"><button type="submit" class="btn">บันทึกบัญชีรับเงิน</button></div>
+          </form>
+          <div class="card preview">
+            <p class="eyebrow" style="margin-bottom:14px">ตัวอย่างที่ลูกค้าเห็น</p>
+            <div id="payPreview"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-tab" id="tabDatabase" hidden>
+        <div class="card">
+          <h3>ตั้งค่าข้อมูลสตูดิโอ & รหัสผ่าน Admin</h3>
+          <form id="studioConfigForm">
+            <div class="row">
+              <div class="field"><label>ชื่อร้าน / นิติบุคคล</label><input id="cfgLegal"></div>
+              <div class="field"><label>เบอร์โทรศัพท์</label><input id="cfgPhone"></div>
+            </div>
+            <div class="row">
+              <div class="field"><label>อีเมลติดต่อ</label><input id="cfgEmail"></div>
+              <div class="field"><label>เลขผู้เสียภาษี</label><input id="cfgTax"></div>
+            </div>
+            <div class="field"><label>ที่อยู่สตูดิโอ</label><input id="cfgAddr"></div>
+            <div class="row">
+              <div class="field"><label>อีเมลเข้าสู่ระบบ Admin</label><input id="cfgAdminEmail" type="email" required></div>
+              <div class="field"><label>รหัสผ่าน Admin</label><input id="cfgAdminPass" type="text" required></div>
+            </div>
+            <div class="form-actions"><button type="submit" class="btn sm">บันทึกการตั้งค่า</button></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p class="big reveal">พร้อมสร้างภาพ<br><span class="grad-text">ในแบบ 2000's</span> ของคุณ</p>
+    <div class="cols">
+      <span>© ToyGallery 2000's Studio</span>
+      <span id="footContact"></span>
+      <a href="#admin">Studio Login</a>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lb" aria-hidden="true">
+  <button class="lb-btn lb-close" data-lb="close">✕</button>
+  <button class="lb-btn lb-prev" data-lb="prev">←</button>
+  <img id="lbImg" alt="">
+  <button class="lb-btn lb-next" data-lb="next">→</button>
+  <p class="lb-cap" id="lbCap"></p>
+</div>
+
+<div class="modal" id="okModal"><div class="modal-box small" id="okBody"></div></div>
+
+<div class="modal" id="docModal">
+  <div class="modal-box">
+    <div class="doc-tools">
+      <div class="tabs">
+        <button data-type="quote">ใบเสนอราคา</button>
+        <button data-type="invoice">ใบแจ้งหนี้</button>
+      </div>
+      <span id="docEdit" hidden>
+        <label>ส่วนลด ฿ <input type="number" id="dDiscount" min="0" step="100"></label>
+        <label><input type="checkbox" id="dVat"> VAT 7%</label>
+      </span>
+      <span id="providerEdit" hidden>
+        <label>ผู้เสนอราคา/ผู้รับจ้าง</label>
+        <textarea id="dProvider" rows="2"></textarea>
+      </span>
+      <span class="sp"></span>
+      <button class="btn sm ok" id="dPay" hidden>ชำระเงินมัดจำ →</button>
+      <button class="btn sm" id="dPrint">พิมพ์ / PDF</button>
+      <button class="btn sm ghost" data-close>ปิด</button>
+    </div>
+    <div class="doc" id="doc"></div>
+  </div>
+</div>
+
+<div class="modal" id="deliveryModal">
+  <div class="modal-box small small-left">
+    <button class="modal-x" data-close>✕</button>
+    <p class="eyebrow">ส่งงานลูกค้า</p>
+    <h3 class="h2" style="font-size:1.3rem;margin:.3em 0 .8em" id="delTitle">รหัสจอง</h3>
+    <form id="delForm">
+      <input type="hidden" id="delId">
+      <div class="field"><label>ลิงก์ Google Drive</label><input id="delDrive" placeholder="https://drive.google.com/drive/folders/..."></div>
+      <div class="field"><label>ลิงก์ Google Photos</label><input id="delPhotos" placeholder="https://photos.google.com/share/..."></div>
+      <div class="field"><label>ข้อความถึงลูกค้า</label><textarea id="delNote" rows="2" placeholder="งานเสร็จแล้ว..."></textarea></div>
+      <div class="form-actions"><button type="button" class="btn ghost" data-close>ยกเลิก</button><button type="submit" class="btn" id="delSave">บันทึกลิงก์</button></div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="payModal">
+  <div class="modal-box small small-left">
+    <button class="modal-x" data-close>✕</button>
+    <p class="eyebrow">ชำระเงินมัดจำ</p>
+    <h3 class="h2" style="font-size:1.3rem;margin:.3em 0 .6em">ยอดที่ต้องชำระ</h3>
+    <div id="payModalBody"></div>
+    <div class="ok-acts" style="margin-top:18px">
+      <button class="btn sm ghost" data-close>ปิด</button>
+      <button class="btn sm ok" id="payToSlip">แจ้งโอนเงินแล้ว →</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="slipModal">
+  <div class="modal-box small small-left">
+    <button class="modal-x" data-close>✕</button>
+    <p class="eyebrow">ยืนยันการจอง</p>
+    <h3 class="h2" style="font-size:1.3rem;margin:.3em 0 .8em">แนบสลิปโอนเงิน</h3>
+    <form id="slipForm">
+      <input type="hidden" id="slipId">
+      <div class="field"><label>รูปสลิปโอนเงิน <span class="req">*</span></label><input type="file" id="slipFile" accept="image/*" required></div>
+      <div class="field"><label>หมายเหตุ (ไม่บังคับ)</label><textarea id="slipNote" rows="2" placeholder="เช่น โอนจากบัญชี..."></textarea></div>
+      <div class="form-actions"><button type="button" class="btn ghost" data-close>ยกเลิก</button><button type="submit" class="btn" id="slipSave">ยืนยันคิว</button></div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="viewSlipModal">
+  <div class="modal-box small">
+    <button class="modal-x" data-close>✕</button>
+    <p class="eyebrow">หลักฐานการโอนเงิน</p>
+    <h3 class="h2" style="font-size:1.25rem;margin:.3em 0 .6em" id="vsTitle">สลิปโอนเงิน</h3>
+    <div id="vsBody"></div>
+    <div class="ok-acts"><button class="btn sm ghost" data-close>ปิดหน้าต่าง</button></div>
+  </div>
+</div>
+
+<div class="modal" id="editBookingModal">
+  <div class="modal-box small small-left" style="width:min(700px,100%)">
+    <button class="modal-x" data-close>✕</button>
+    <p class="eyebrow">แก้ไขคิวงาน</p>
+    <h3 class="h2" style="font-size:1.3rem;margin:.3em 0 .8em" id="editTitle">รหัสจอง</h3>
+    <input type="hidden" id="editId">
+    <div class="row">
+      <div class="field"><label>ชื่อลูกค้า</label><input id="editName"></div>
+      <div class="field"><label>เบอร์โทร</label><input id="editPhone" inputmode="tel"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>อีเมล</label><input id="editEmail" type="email"></div>
+      <div class="field"><label>สถานที่</label><input id="editLoc"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>วันที่</label><input id="editDate" type="date"></div>
+      <div class="field"><label>ช่วงเวลา</label><select id="editSlot"></select></div>
+    </div>
+    <div class="field"><label>หมวดหมู่</label><select id="editPkgCat"></select></div>
+    <div class="field"><label>แพ็กเกจ</label><select id="editPkgItem"></select></div>
+    <div class="field" id="editHourWrap" hidden><label>จำนวนชั่วโมง</label><input id="editPkgQty" type="number" min="1" value="1"></div>
+    <div class="field"><label>บริการเสริม</label><div class="opts" id="editAddons"></div></div>
+    <div class="field"><label>สถานะ</label><select id="editStatus"></select></div>
+    <div class="field"><label>หมายเหตุ</label><textarea id="editNote" rows="2"></textarea></div>
+    <div class="form-actions"><button class="btn ghost" data-close>ยกเลิก</button><button class="btn" id="editSave">บันทึก</button></div>
+  </div>
+</div>
+
+<a href="#booking" class="btn fab" id="fab">จองคิว →</a>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- FIREBASE SDKs (CDN) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  // TODO: นำ Firebase Config ของคุณมาใส่ตรงนี้
+  const firebaseConfig = {
+  apiKey: "AIzaSyCO2714j61UHPTc9lcCuWXVlPVhv0kbSrA",
+  authDomain: "toy-gallery-2000s.firebaseapp.com",
+  projectId: "toy-gallery-2000s",
+  storageBucket: "toy-gallery-2000s.firebasestorage.app",
+  messagingSenderId: "63882451421",
+  appId: "1:63882451421:web:93871e8ae87df764557e34",
+  measurementId: "G-KNWNB5X271"
+};
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  window.firebaseDB = { db, doc, getDoc, setDoc, collection, getDocs };
+</script>
+
+<script>
+document.documentElement.classList.add('js');
+
+let DEMO_ADMIN = { email: 'admin@toygallery.com', password: 'toy2000' };
+let STUDIO = {
+  name: "ToyGallery 2000's",
+  legal: 'ทอยแกลเลอรี 2000',
+  address: '42 หมู่ 5 ต.และ อ.ทุ่งช้าง จ.น่าน 55130',
+  phone: '089-123-4567', email: 'hello@toygallery.studio', taxId: '-'
+};
+
+let DEFAULT_PAY = {
+  bankName: 'ธนาคารออมสิน', accountNo: '020349396323', accountName: 'นายปรวรรตน์ แสนใหญ่',
+  promptpay: '0891234567', qr: '', note: 'โอนแล้วส่งสลิปทาง LINE @toygallery พร้อมรหัสการจอง'
+};
+
+const DEPOSIT_AMOUNT = 1500;
+const CATS = { all: 'ทั้งหมด', wedding: 'งานแต่ง', prewedding: 'พรีเวดดิ้ง', graduation: 'รับปริญญา', portrait: 'โปรไฟล์' };
+
+let DEFAULT_WORKS = [
+  { id: 'w1', c: 'wedding', t: 'Digital Love 2000', src: 'https://picsum.photos/seed/toyg-w1/900/1240' },
+  { id: 'p1', c: 'prewedding', t: 'Neon Sunset', src: 'https://picsum.photos/seed/toyg-p1/900/900' },
+  { id: 'g1', c: 'graduation', t: 'Class of 00s', src: 'https://picsum.photos/seed/toyg-g1/900/1120' }
+];
+
+const PACKAGE_CATS = [
+  {
+    id: 'ordination', name: 'งานบวช ใน จ.น่าน',
+    items: [
+      { id: 'ordination-half', name: 'งานครึ่งวัน (เช้า - เที่ยง / บ่าย - เย็น)', price: 4500, features: ['ถ่ายภาพครึ่งวัน', 'ไฟล์แต่งสีทั้งหมด', 'ส่งงานภายใน 7 วัน'] },
+      { id: 'ordination-full', name: 'งานเต็มวัน (เช้า - เย็น)', price: 9000, features: ['ถ่ายภาพเต็มวัน', 'ไฟล์แต่งสีทั้งหมด', 'ส่งงานภายใน 7 วัน'] },
+      { id: 'ordination-1_5', name: 'งาน 1 วันครึ่ง', price: 12000, features: ['ถ่ายภาพ 1 วันครึ่ง', 'ไฟล์แต่งสีทั้งหมด', 'ส่งงานภายใน 10 วัน'] }
+    ]
+  },
+  {
+    id: 'commencement', name: 'Commencement ceremony Day',
+    items: [
+      { id: 'commencement-half', name: 'ครึ่งวัน (4 ชั่วโมง) วันจริง/วันซ้อม/นอกรอบ', price: 3500, features: ['ถ่ายภาพ 4 ชั่วโมง', 'โทนฟิล์มยุค 2000s', 'ไฟล์ทั้งหมด'] },
+      { id: 'commencement-full', name: 'เต็มวัน (8 ชั่วโมง) วันจริง/วันซ้อม/นอกรอบ', price: 7000, features: ['ถ่ายภาพ 8 ชั่วโมง', 'โทนฟิล์มยุค 2000s', 'ไฟล์ทั้งหมด'] }
+    ]
+  },
+  {
+    id: 'wedding', name: 'Wedding Day',
+    items: [
+      { id: 'wedding-half', name: 'งาน เช้า - เที่ยง / บ่าย - เย็น', price: 6500, features: ['ถ่ายภาพครึ่งวัน', 'ไฟล์แต่งสีทั้งหมด', 'ส่งงานภายใน 14 วัน'] },
+      { id: 'wedding-full', name: 'งาน เช้า - เย็น / บ่าย - ดึก', price: 11500, features: ['ถ่ายภาพเต็มวัน', 'ไฟล์แต่งสีทั้งหมด', 'ส่งงานภายใน 14 วัน'], featured: true }
+    ]
+  },
+  {
+    id: 'wedding-nan', name: 'Wedding Day ใน จ.น่าน',
+    items: [
+      { id: 'wedding-nan-half', name: 'งาน เช้า - เที่ยง / บ่าย - เย็น', price: 5000, features: ['ถ่ายภาพครึ่งวัน ใน จ.น่าน', 'ไฟล์แต่งสีทั้งหมด', 'ส่งงานภายใน 14 วัน'] },
+      { id: 'wedding-nan-full', name: 'งาน เช้า - เย็น / บ่าย - ดึก', price: 9500, features: ['ถ่ายภาพเต็มวัน ใน จ.น่าน', 'ไฟล์แต่งสีทั้งหมด', 'ส่งงานภายใน 14 วัน'] }
+    ]
+  },
+  {
+    id: 'prewedding', name: 'Pre-Wedding (นอกสถานที่)',
+    items: [
+      { id: 'prewedding-half', name: 'ครึ่งวัน (4 ชั่วโมง)', price: 3500, features: ['ถ่ายภาพ 4 ชั่วโมง', 'นอกสถานที่', 'ไฟล์ทั้งหมด'] },
+      { id: 'prewedding-full', name: 'เต็มวัน (8 ชั่วโมง)', price: 7000, features: ['ถ่ายภาพ 8 ชั่วโมง', 'นอกสถานที่', 'ไฟล์ทั้งหมด'] },
+      { id: 'prewedding-hour', name: 'รายชั่วโมง', price: 1500, unit: 'ชั่วโมง', isHourly: true, features: ['เหมาจ่ายรายชั่วโมง', 'นอกสถานที่', 'ไฟล์ทั้งหมด'] }
+    ]
+  }
+];
+let PACKAGES = PACKAGE_CATS.flatMap(c => c.items.map(i => ({ ...i, category: c.name, categoryId: c.id })));
+
+let ADDONS = [
+  { id: 'second', name: 'ช่างภาพเพิ่ม 1 คน', price: 3500 },
+  { id: 'album', name: 'อัลบั้มพรีเมียม', price: 4500 },
+  { id: 'video', name: 'วิดีโอสไตล์ VCD', price: 9000 },
+  { id: 'express', name: 'ส่งงานด่วน 48 ชม.', price: 1500 },
+  { id: 'hour', name: 'เพิ่มเวลา 1 ชั่วโมง', price: 1500 }
+];
+const SLOTS = [
+  { id: 'morning', label: 'ช่วงเช้า', time: '08:00–12:00' },
+  { id: 'afternoon', label: 'ช่วงบ่าย', time: '13:00–17:00' },
+  { id: 'evening', label: 'ช่วงเย็น', time: '17:00–21:00' },
+  { id: 'full', label: 'เต็มวัน', time: '08:00–20:00' }
+];
+const STATUS = {
+  pending: { t: 'รอชำระมัดจำ', c: 's-pending' },
+  confirmed: { t: 'ยืนยันแล้ว', c: 's-confirmed' },
+  done: { t: 'เสร็จสิ้น', c: 's-done' },
+  cancelled: { t: 'ยกเลิก', c: 's-cancelled' }
+};
+
+const $ = (s, p = document) => p.querySelector(s);
+const $$ = (s, p = document) => Array.from(p.querySelectorAll(s));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const money = n => Number(n || 0).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const money0 = n => Number(n || 0).toLocaleString('th-TH');
+const r2 = n => Math.round(n * 100) / 100;
+const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const parse = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+const thDate = s => (s instanceof Date ? s : parse(s)).toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+function todayBKK() {
+  try {
+    const p = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Bangkok', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+    const g = t => p.find(x => x.type === t).value;
+    return `${g('year')}-${g('month')}-${g('day')}`;
+  } catch { return iso(new Date()); }
+}
+const SLOT = id => SLOTS.find(s => s.id === id) || { label: id, time: '' };
+const PKG = id => PACKAGES.find(p => p.id === id);
+const ADDON = id => ADDONS.find(a => a.id === id);
+const cache = new Map();
+
+function toast(msg) {
+  const t = $('#toast'); if (!t) return;
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 3000);
+}
+function busyBtn(btn, on, text) {
+  if (!btn) return;
+  if (on) { btn.dataset.label = btn.innerHTML; btn.disabled = true; btn.innerHTML = `<span class="spinner"></span> ${text || 'กำลังดำเนินการ'}`; }
+  else { btn.disabled = false; if (btn.dataset.label) btn.innerHTML = btn.dataset.label; }
+}
+async function copyText(t) {
+  try { await navigator.clipboard.writeText(t); } catch {
+    const a = document.createElement('textarea'); a.value = t; a.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch {} a.remove();
+  }
+  toast('คัดลอกแล้ว: ' + t);
+}
+
+const store = (() => {
+  const mem = {}; let ok = false;
+  try { localStorage.setItem('__tg', '1'); localStorage.removeItem('__tg'); ok = true; } catch {}
+  return {
+    get(k) { if (ok) { try { return localStorage.getItem(k); } catch {} } return k in mem ? mem[k] : null; },
+    set(k, v) { mem[k] = v; if (!ok) return true; try { localStorage.setItem(k, v); return true; } catch { return false; } },
+    del(k) { delete mem[k]; if (ok) { try { localStorage.removeItem(k); } catch {} } }
+  };
+})();
+
+function imageToDataURL(file, max = 520) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onerror = rej;
+    r.onload = () => {
+      const img = new Image();
+      img.onerror = rej;
+      img.onload = () => {
+        const s = Math.min(1, max / Math.max(img.width, img.height));
+        const c = document.createElement('canvas');
+        c.width = Math.max(1, Math.round(img.width * s)); c.height = Math.max(1, Math.round(img.height * s));
+        const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+        x.drawImage(img, 0, 0, c.width, c.height);
+        res(c.toDataURL('image/png'));
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(file);
+  });
+}
+const qrOK = s => typeof s === 'string' && /^data:image\/(png|jpe?g|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(s);
+
+function bahtText(num) {
+  const N = ['ศูนย์','หนึ่ง','สอง','สาม','สี่','ห้า','หก','เจ็ด','แปด','เก้า'];
+  const U = ['','สิบ','ร้อย','พัน','หมื่น','แสน'];
+  const read = (n, lead = false) => {
+    if (n >= 1e6) return read(Math.floor(n / 1e6)) + 'ล้าน' + read(n % 1e6, true);
+    const s = String(n); let o = '';
+    for (let i = 0; i < s.length; i++) {
+      const d = +s[i], pos = s.length - 1 - i; if (!d) continue;
+      if (pos === 1 && d === 2) o += 'ยี่';
+      else if (pos === 1 && d === 1) {}
+      else if (pos === 0 && d === 1 && (s.length > 1 || lead)) o += 'เอ็ด';
+      else o += N[d];
+      o += U[pos];
+    }
+    return o;
+  };
+  num = r2(num);
+  const baht = Math.floor(num), st = Math.round((num - baht) * 100);
+  if (!baht && !st) return 'ศูนย์บาทถ้วน';
+  return (baht ? read(baht) + 'บาท' : '') + (st ? read(st) + 'สตางค์' : 'ถ้วน');
+}
+
+const ERR = {
+  SLOT_TAKEN: 'ช่วงเวลานี้ถูกจองหรือเป็นวันหยุดสตูดิโอ กรุณาเลือกช่วงอื่น', INVALID_PACKAGE: 'แพ็กเกจไม่ถูกต้อง', INVALID_ADDON: 'บริการเสริมไม่ถูกต้อง',
+  INVALID_SLOT: 'ช่วงเวลาไม่ถูกต้อง', INVALID_DATE: 'วันที่ไม่ถูกต้อง', INVALID_NAME: 'กรุณากรอกชื่อ', INVALID_PHONE: 'เบอร์โทรไม่ถูกต้อง',
+  INVALID_EMAIL: 'อีเมลไม่ถูกต้อง', LOGIN: 'อีเมลหรือรหัสผ่านไม่ถูกต้อง', STORAGE: 'พื้นที่เก็บข้อมูลในเบราว์เซอร์เต็ม'
+};
+const errMsg = e => { const m = (e && (e.message || e.msg)) || ''; const k = Object.keys(ERR).find(k => m.includes(k)); return k ? ERR[k] : 'ระบบขัดข้อง กรุณาลองใหม่'; };
+const fail = code => { throw new Error(code); };
+
+/* =====================================================================
+   FIREBASE CLOUD DATABASE LAYER
+   ===================================================================== */
+const K = {
+  bookings: 'tg_bookings_fb', pay: 'tg_pay_fb', gallery: 'tg_gallery_fb',
+  admin: 'tg_admin_fb', blocks: 'tg_blocks_fb', promos: 'tg_promos_fb', config: 'tg_config_fb'
+};
+
+const fbDB = {
+  async get(key, fallback) {
+    try {
+      if (window.firebaseDB) {
+        const { db, doc, getDoc } = window.firebaseDB;
+        const snap = await getDoc(doc(db, "toygallery", key));
+        if (snap.exists()) {
+          const val = snap.data().val;
+          store.set(key, JSON.stringify(val));
+          return val;
         }
-      });
-    </script>
-  </body>
+      }
+    } catch (e) { console.warn("FB get error, using local:", e); }
+    const local = store.get(key);
+    return local != null ? JSON.parse(local) : fallback;
+  },
+  async set(key, val) {
+    store.set(key, JSON.stringify(val));
+    try {
+      if (window.firebaseDB) {
+        const { db, doc, setDoc } = window.firebaseDB;
+        await setDoc(doc(db, "toygallery", key), { val, updated_at: new Date().toISOString() });
+      }
+    } catch (e) { console.warn("FB set error:", e); }
+  }
+};
+
+function buildItems(pkg, pkgQty, addons) {
+  const p = PKG(pkg);
+  const qty = p && p.isHourly ? Math.max(1, +pkgQty || 1) : 1;
+  return [{ d: p.name + (p.isHourly ? ` (${qty} ชั่วโมง)` : ''), q: qty, u: +p.price }, ...addons.map(id => ({ d: ADDON(id).name, q: 1, u: +ADDON(id).price }))];
+}
+function demoSeed() {
+  const t = parse(todayBKK()), now = new Date().toISOString();
+  return [
+    { id: 'BK-DEMO-0001', created_at: now, name: 'คุณแจน ใจดี', phone: '0812345678', email: 'jan@test.com', location: 'อ.เมือง จ.น่าน', note: null,
+      pkg: 'commencement-half', pkgQty: 1, addons: ['express'], items: buildItems('commencement-half', 1, ['express']), date: iso(addDays(t, 3)), slot: 'morning', status: 'confirmed', discount: 0, vat: true },
+    { id: 'BK-DEMO-0002', created_at: now, name: 'คุณนัท & คุณโบว์', phone: '0898765432', email: null, location: 'คาเฟ่สไตล์ Y2K', note: null,
+      pkg: 'wedding-full', pkgQty: 1, addons: ['album'], items: buildItems('wedding-full', 1, ['album']), date: iso(addDays(t, 6)), slot: 'full', status: 'pending', discount: 1000, vat: true }
+  ];
+}
+function genId() {
+  const ymd = todayBKK().slice(2).replace(/-/g, ''), A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let r = ''; for (let i = 0; i < 6; i++) r += A[Math.floor(Math.random() * A.length)];
+  return `BK-${ymd}-${r}`;
+}
+
+let bookingsCache = [], blocksCache = [], promosCache = [], galleryCache = [];
+
+const api = {
+  config: {
+    async load() {
+      const c = await fbDB.get(K.config, null);
+      if (c) {
+        if (c.studio) Object.assign(STUDIO, c.studio);
+        if (c.admin && c.admin.email) Object.assign(DEMO_ADMIN, c.admin);
+      }
+    },
+    async save(studio, admin) {
+      Object.assign(STUDIO, studio);
+      Object.assign(DEMO_ADMIN, admin);
+      await fbDB.set(K.config, { studio: STUDIO, admin: DEMO_ADMIN });
+    }
+  },
+  blocks: {
+    load() { return blocksCache; },
+    async save(list) { blocksCache = list; await fbDB.set(K.blocks, list); }
+  },
+  promos: {
+    load() { return promosCache.length ? promosCache : [{ code: 'Y2K500', amount: 500 }, { code: 'NAN1000', amount: 1000 }]; },
+    async save(list) { promosCache = list; await fbDB.set(K.promos, list); },
+    find(code) {
+      if (!code) return null;
+      const c = String(code).trim().toUpperCase();
+      return this.load().find(p => p.code.toUpperCase() === c) || null;
+    }
+  },
+  bookings: {
+    load() { return bookingsCache; },
+    async save(list) { bookingsCache = list; await fbDB.set(K.bookings, list); },
+    taken(list, date, slot, ignoreId) {
+      if (api.blocks.load().some(bl => bl.date === date)) return true;
+      return list.some(b => b.id !== ignoreId && b.date === date && b.status !== 'cancelled' && (b.slot === 'full' || slot === 'full' || b.slot === slot));
+    },
+    busy() {
+      const t = todayBKK();
+      const bks = this.load().filter(b => b.date >= t && b.status !== 'cancelled').map(b => ({ date: b.date, slot: b.slot }));
+      const blks = api.blocks.load().filter(bl => bl.date >= t).map(bl => ({ date: bl.date, slot: 'full', blocked: true, reason: bl.reason }));
+      return bks.concat(blks);
+    },
+    async create(x) {
+      const list = this.load();
+      if (!PKG(x.pkg)) fail('INVALID_PACKAGE');
+      if (x.addons.some(a => !ADDON(a))) fail('INVALID_ADDON');
+      if (!SLOTS.some(s => s.id === x.slot)) fail('INVALID_SLOT');
+      if (!x.date || x.date < todayBKK()) fail('INVALID_DATE');
+      if (!x.name) fail('INVALID_NAME');
+      if (!/^0\d{8,9}$/.test(x.phone)) fail('INVALID_PHONE');
+      if (x.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x.email)) fail('INVALID_EMAIL');
+      if (this.taken(list, x.date, x.slot)) fail('SLOT_TAKEN');
+      const discount = Number(x.discount) || 0;
+      const b = { id: genId(), created_at: new Date().toISOString(), ...x, items: buildItems(x.pkg, x.pkgQty, x.addons), status: 'pending', discount, vat: false };
+      list.unshift(b); await this.save(list);
+      return b;
+    },
+    lookup(id, phone) {
+      const code = String(id).trim().toUpperCase(), p = String(phone).replace(/\D/g, '');
+      return this.load().find(b => b.id === code && b.phone === p) || null;
+    },
+    list() { return [...this.load()].sort((a, b) => a.date.localeCompare(b.date)); },
+    async update(id, patch) {
+      const list = this.load(), b = list.find(x => x.id === id); if (!b) fail('NO_PERMISSION');
+      const next = { ...b, ...patch };
+      if (next.status !== 'cancelled' && this.taken(list, next.date, next.slot, id)) fail('SLOT_TAKEN');
+      Object.assign(b, patch); await this.save(list);
+    },
+    async remove(id) { await this.save(this.load().filter(b => b.id !== id)); }
+  },
+  pay: {
+    async load() { return await fbDB.get(K.pay, DEFAULT_PAY); },
+    async save(p) { PAY = p; await fbDB.set(K.pay, p); }
+  },
+  gallery: {
+    load() { return galleryCache.length ? galleryCache : DEFAULT_WORKS; },
+    async save(list) { galleryCache = list; await fbDB.set(K.gallery, list); }
+  },
+  admin: {
+    check() { return store.get(K.admin) === '1'; },
+    login(email, password) {
+      if (email === DEMO_ADMIN.email && password === DEMO_ADMIN.password) { store.set(K.admin, '1'); return true; }
+      fail('LOGIN');
+    },
+    logout() { store.del(K.admin); }
+  }
+};
+
+async function initSyncData() {
+  await api.config.load();
+  bookingsCache = await fbDB.get(K.bookings, demoSeed());
+  blocksCache = await fbDB.get(K.blocks, []);
+  promosCache = await fbDB.get(K.promos, [{ code: 'Y2K500', amount: 500 }, { code: 'NAN1000', amount: 1000 }]);
+  galleryCache = await fbDB.get(K.gallery, DEFAULT_WORKS);
+  PAY = await api.pay.load();
+}
+
+function isTaken(busy, date, slot) {
+  const list = busy.filter(b => b.date === date); if (!list.length) return false;
+  if (slot === 'full') return true;
+  return list.some(b => b.slot === 'full' || b.slot === slot);
+}
+function dayState(busy, date) {
+  const list = busy.filter(b => b.date === date); if (!list.length) return '';
+  const full = list.some(b => b.slot === 'full') || ['morning', 'afternoon', 'evening'].every(s => list.some(b => b.slot === s));
+  return full ? 'full' : 'partial';
+}
+function calc(b) {
+  const subtotal = (b.items || []).reduce((t, i) => t + Number(i.q) * Number(i.u), 0);
+  const discount = Math.min(Math.max(Number(b.discount) || 0, 0), subtotal);
+  const net = r2(subtotal - discount), vat = b.vat ? r2(net * 0.07) : 0, total = r2(net + vat);
+  const deposit = Math.min(DEPOSIT_AMOUNT, total);
+  return { subtotal, discount, net, vat, total, deposit, balance: r2(total - deposit) };
+}
+function dueOf(b) {
+  const c = calc(b);
+  if (b.status === 'pending') return { amount: c.deposit, label: `ค่ามัดจำ ${money0(DEPOSIT_AMOUNT)} บาท` };
+  if (b.status === 'confirmed') return { amount: c.balance, label: 'ยอดคงเหลือ' };
+  return null;
+}
+
+let PAY = { ...DEFAULT_PAY };
+let WORKS = [...DEFAULT_WORKS];
+
+/* =====================================================================
+   UI & APP INITIALIZATION
+   ===================================================================== */
+function openModal(s) { $(s).classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeModal(s) { const m = $(s); if (m) m.classList.remove('open'); if (!$('.modal.open') && !$('#lb.open')) document.body.style.overflow = ''; }
+
+function formatStudio(s) {
+  return `${s.legal}\n${s.address}\nโทร ${s.phone} · ${s.email}\nเลขประจำตัวผู้เสียภาษี ${s.taxId}`;
+}
+
+function payBlock(pay, opt = {}) {
+  const { amount, label, ref } = opt;
+  return `<div class="pay">
+    <div class="pay-qr">${qrOK(pay.qr) ? `<img src="${pay.qr}" alt="QR Code">` : '<div class="pay-qr-empty">ยังไม่มี<br>QR Code</div>'}</div>
+    <div>
+      ${amount != null ? `<span class="lbl">${esc(label || 'ยอดที่ต้องชำระ')}</span><div class="pay-amt">฿${money(amount)}</div>` : ''}
+      ${pay.bankName ? `<div class="pay-row">${esc(pay.bankName)}</div>` : ''}
+      ${pay.accountNo ? `<div class="pay-row acc"><b>${esc(pay.accountNo)}</b><button type="button" class="copy" data-copy="${esc(pay.accountNo)}">คัดลอก</button></div>` : ''}
+      ${pay.accountName ? `<div class="pay-row muted">${esc(pay.accountName)}</div>` : ''}
+      ${pay.promptpay ? `<div class="pay-row">พร้อมเพย์ <b>${esc(pay.promptpay)}</b><button type="button" class="copy" data-copy="${esc(pay.promptpay)}">คัดลอก</button></div>` : ''}
+      ${(ref || pay.note) ? `<p class="pay-note">${ref ? `อ้างอิง <b>${esc(ref)}</b>` : ''}${ref && pay.note ? ' · ' : ''}${esc(pay.note || '')}</p>` : ''}
+    </div>
+  </div>`;
+}
+
+function docHTML(b, type, provider) {
+  const c = calc(b), isQ = type === 'quote', created = new Date(b.created_at), s = SLOT(b.slot);
+  const no = (isQ ? 'QT' : 'INV') + b.id.replace(/^BK/, '');
+  const due = dueOf(b);
+  const providerHtml = esc(provider).replace(/\n/g, '<br>');
+  const delivery = b.delivery ? `<div class="terms" style="background:#f8f7ff;padding:14px;border-radius:12px;margin-top:18px">
+    <span class="lbl">ลิงก์รับงาน</span>
+    ${b.delivery.drive ? `<p><a href="${esc(b.delivery.drive)}" target="_blank">Google Drive →</a></p>` : ''}
+    ${b.delivery.photos ? `<p><a href="${esc(b.delivery.photos)}" target="_blank">Google Photos →</a></p>` : ''}
+    ${b.delivery.note ? `<p>${esc(b.delivery.note)}</p>` : ''}
+  </div>` : '';
+  return `
+  ${b.status === 'cancelled' ? '<div class="void">VOID</div>' : ''}
+  <div class="doc-head">
+    <div><div class="doc-logo">TOYGALLERY <span>2000'S</span></div>
+      <p class="small">${providerHtml}</p></div>
+    <div class="doc-title">
+      <h1>${isQ ? 'ใบเสนอราคา' : 'ใบแจ้งหนี้'}</h1><p class="en">${isQ ? 'QUOTATION' : 'INVOICE'}</p>
+      <table class="meta"><tr><td>เลขที่</td><td>${esc(no)}</td></tr><tr><td>วันที่</td><td>${thDate(created)}</td></tr>
+      <tr><td>${isQ ? 'ยืนราคาถึง' : 'ครบกำหนดชำระ'}</td><td>${thDate(addDays(created, isQ ? 15 : 3))}</td></tr><tr><td>อ้างอิงการจอง</td><td>${esc(b.id)}</td></tr></table>
+    </div>
+  </div>
+  <div class="doc-party">
+    <div><span class="lbl">ลูกค้า / Bill to</span><strong>${esc(b.name)}</strong><br>โทร ${esc(b.phone)}${b.email ? '<br>' + esc(b.email) : ''}</div>
+    <div><span class="lbl">รายละเอียดงาน</span>${thDate(b.date)}<br>${s.label} ${s.time}${b.location ? '<br>สถานที่: ' + esc(b.location) : ''}</div>
+  </div>
+  <table class="items">
+    <thead><tr><th style="width:40px">#</th><th>รายการ</th><th class="r">จำนวน</th><th class="r">ราคา/หน่วย</th><th class="r">จำนวนเงิน</th></tr></thead>
+    <tbody>${b.items.map((it, i) => `<tr><td>${i + 1}</td><td>${esc(it.d)}${i === 0 ? `<small>${thDate(b.date)} · ${s.label} ${s.time}</small>` : ''}</td><td class="r">${it.q}</td><td class="r">${money(it.u)}</td><td class="r">${money(it.q * it.u)}</td></tr>`).join('')}</tbody>
+  </table>
+  <div class="doc-sum">
+    <div class="words"><span class="lbl">จำนวนเงินตัวอักษร</span>(${bahtText(c.total)})</div>
+    <table>
+      <tr><td>รวมเป็นเงิน</td><td class="r">${money(c.subtotal)}</td></tr>
+      ${c.discount ? `<tr><td>ส่วนลด ${b.promoCode ? `(${esc(b.promoCode)})` : ''}</td><td class="r">-${money(c.discount)}</td></tr><tr><td>ยอดหลังหักส่วนลด</td><td class="r">${money(c.net)}</td></tr>` : ''}
+      ${b.vat ? `<tr><td>ภาษีมูลค่าเพิ่ม 7%</td><td class="r">${money(c.vat)}</td></tr>` : ''}
+      <tr class="grand"><td>ยอดรวมทั้งสิ้น</td><td class="r">฿${money(c.total)}</td></tr>
+    </table>
+  </div>
+  ${isQ ? `
+    <div class="terms"><span class="lbl">เงื่อนไข</span><ol>
+      <li>ชำระมัดจำ ฿${money(DEPOSIT_AMOUNT)} ภายใน 3 วันเพื่อยืนยันคิว ส่วนที่เหลือชำระในวันงาน</li>
+      <li>ยกเลิกก่อนวันงาน 30 วัน คืนมัดจำ 50% หลังจากนั้นขอสงวนสิทธิ์ไม่คืนมัดจำ</li>
+      <li>เลื่อนวันได้ 1 ครั้ง โดยแจ้งล่วงหน้าอย่างน้อย 14 วัน</li>
+      <li>ราคานี้ยืนราคา 15 วันนับจากวันที่ออกเอกสาร</li></ol></div>
+    <div class="signs"><div>ผู้เสนอราคา</div><div>ผู้อนุมัติ / ลูกค้า</div></div>`
+  : `
+    ${due ? payBlock(PAY, { amount: due.amount, label: `ยอดที่ต้องชำระครั้งนี้ · ${due.label}`, ref: b.id })
+          : `<div class="paid">${b.status === 'done' ? 'ชำระครบแล้ว ขอบคุณที่ใช้บริการ' : 'รายการนี้ถูกยกเลิก'}</div>`}
+    <p class="small muted" style="margin-top:10px">มัดจำ ฿${money(c.deposit)} · คงเหลือ ฿${money(c.balance)}</p>
+    ${delivery}
+    <div class="signs"><div>ผู้รับเงิน</div><div>ผู้วางบิล</div></div>`}`;
+}
+
+const DocModal = {
+  b: null, type: 'quote', edit: false, onPatch: null, provider: '',
+  open(b, type = 'quote', edit = false) {
+    this.b = b; this.type = type; this.edit = edit;
+    this.provider = b.provider || formatStudio(STUDIO);
+    $('#providerEdit').hidden = !edit;
+    $('#dProvider').value = this.provider;
+    $('#docEdit').hidden = !edit;
+    $('#dDiscount').value = Number(b.discount) || 0; $('#dVat').checked = !!b.vat;
+    const showPay = (type === 'quote' && !edit && b.status === 'pending');
+    $('#dPay').hidden = !showPay; currentPayBooking = showPay ? b : null;
+    this.render(); openModal('#docModal');
+  },
+  render() {
+    $$('#docModal .tabs button').forEach(t => t.classList.toggle('on', t.dataset.type === this.type));
+    $('#doc').innerHTML = docHTML(this.b, this.type, this.provider);
+  },
+  patch(p) { if (!this.edit || !this.b) return; Object.assign(this.b, p); this.render(); if (this.onPatch) this.onPatch(this.b); },
+  patchProvider(v) {
+    this.provider = v;
+    if (this.edit && this.b) { this.b.provider = v; if (this.onPatch) this.onPatch(this.b); }
+    this.render();
+  }
+};
+$$('#docModal .tabs button').forEach(t => t.addEventListener('click', () => { DocModal.type = t.dataset.type; DocModal.render(); }));
+$('#dPrint').addEventListener('click', () => window.print());
+$('#dDiscount').addEventListener('input', e => DocModal.patch({ discount: Math.max(0, +e.target.value || 0) }));
+$('#dVat').addEventListener('change', e => DocModal.patch({ vat: e.target.checked }));
+$('#dProvider').addEventListener('input', e => DocModal.patchProvider(e.target.value));
+let currentPayBooking = null;
+$('#dPay').addEventListener('click', () => { if (currentPayBooking) openPayModal(currentPayBooking); });
+
+function openPayModal(b) {
+  const c = calc(b);
+  $('#payModalBody').innerHTML = `
+    <p class="ok-id">฿${money(c.deposit)}</p>
+    <p class="muted small" style="margin-bottom:14px">มัดจำ ${money0(DEPOSIT_AMOUNT)} บาท · รหัสจอง ${esc(b.id)}</p>
+    ${payBlock(PAY, { amount: c.deposit, label: 'ยอดมัดจำ', ref: b.id })}`;
+  currentPayBooking = b;
+  openModal('#payModal');
+}
+$('#payToSlip').addEventListener('click', () => { if (currentPayBooking) { closeModal('#payModal'); openSlipModal(currentPayBooking); } });
+function openSlipModal(b) { $('#slipId').value = b.id; $('#slipFile').value = ''; $('#slipNote').value = ''; openModal('#slipModal'); }
+$('#slipForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const id = $('#slipId').value, f = $('#slipFile').files[0];
+  if (!f) return toast('กรุณาเลือกรูปสลิป');
+  const btn = $('#slipSave'); busyBtn(btn, true, 'กำลังบันทึก');
+  try {
+    const img = await imageToDataURL(f, 800);
+    const slipData = { image: img, note: $('#slipNote').value.trim(), at: new Date().toISOString() };
+    await api.bookings.update(id, { status: 'confirmed', slip: slipData });
+    const b = cache.get(id); if (b) { b.status = 'confirmed'; b.slip = slipData; cache.set(id, b); }
+    const b2 = adminList.find(x => x.id === id); if (b2) { b2.status = 'confirmed'; b2.slip = slipData; }
+    closeModal('#slipModal'); closeModal('#docModal');
+    $('#okBody').innerHTML = `<button class="modal-x" data-close>✕</button><div class="ok-icon"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="38"/><path d="M25 41l10 10 20-22"/></svg></div><p class="eyebrow">ยืนยันคิวสำเร็จ</p><p class="ok-id">${esc(id)}</p><p class="muted small">บันทึกสลิปและเปลี่ยนสถานะเป็น "ยืนยันแล้ว" เรียบร้อย</p><div class="ok-acts"><button class="btn" data-close>ปิด</button></div>`;
+    openModal('#okModal');
+    refreshBusy(); loadAllAdmin();
+  } catch (err) { toast(errMsg(err)); }
+  finally { busyBtn(btn, false); }
+});
+
+/* =====================================================================
+   CLIENT RENDER FUNCTIONS
+   ===================================================================== */
+let appliedPromo = null;
+function refreshBusy() { busy = api.bookings.busy(); renderSlots(); renderCal(); }
+
+function renderGallery() {
+  WORKS = api.gallery.load();
+  $('#filters').innerHTML = Object.entries(CATS).map(([k, v], i) => `<button class="chip ${i ? '' : 'on'}" data-f="${k}">${v}</button>`).join('');
+  $('#gallery').innerHTML = WORKS.map((w, i) => `
+    <figure class="g-item reveal" style="--d:${(i % 3) * 0.08}s" data-c="${w.c}" data-i="${i}">
+      <img loading="lazy" src="${esc(w.src)}" alt="${esc(w.t)}" onload="this.classList.add('ok')" onerror="this.classList.add('ok')">
+      <figcaption class="cap"><small>${CATS[w.c]}</small>${esc(w.t)}</figcaption>
+    </figure>`).join('');
+  $$('#gallery img').forEach(img => { if (img.complete) img.classList.add('ok'); });
+}
+$('#filters').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  $$('#filters .chip').forEach(c => c.classList.toggle('on', c === b));
+  const f = b.dataset.f, items = $$('.g-item');
+  items.forEach(it => it.classList.add('fade'));
+  setTimeout(() => {
+    items.forEach(it => it.classList.toggle('hide', f !== 'all' && it.dataset.c !== f));
+    requestAnimationFrame(() => requestAnimationFrame(() => items.forEach(it => it.classList.remove('fade'))));
+  }, 300);
+});
+
+let lbList = [], lbIdx = 0;
+$('#gallery').addEventListener('click', e => {
+  const it = e.target.closest('.g-item'); if (!it) return;
+  lbList = $$('.g-item:not(.hide)'); lbIdx = Math.max(0, lbList.indexOf(it));
+  showLb(); $('#lb').classList.add('open'); document.body.style.overflow = 'hidden';
+});
+function showLb() {
+  if (!lbList.length) return;
+  const w = WORKS[+lbList[lbIdx].dataset.i], img = $('#lbImg');
+  img.classList.remove('on');
+  img.onload = () => img.classList.add('on');
+  img.src = w.src; img.alt = w.t;
+  if (img.complete) requestAnimationFrame(() => img.classList.add('on'));
+  $('#lbCap').textContent = `${w.t} — ${CATS[w.c]} · ${lbIdx + 1}/${lbList.length}`;
+}
+function lbMove(n) { lbIdx = (lbIdx + n + lbList.length) % lbList.length; showLb(); }
+function closeLb() { $('#lb').classList.remove('open'); if (!$('.modal.open')) document.body.style.overflow = ''; }
+$('#lb').addEventListener('click', e => {
+  const a = e.target.closest('[data-lb]')?.dataset.lb;
+  if (a === 'prev') lbMove(-1); else if (a === 'next') lbMove(1); else if (a === 'close' || e.target.id === 'lb') closeLb();
+});
+let tx = null;
+$('#lb').addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+$('#lb').addEventListener('touchend', e => { if (tx == null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) lbMove(dx < 0 ? 1 : -1); tx = null; });
+
+function renderPackages() {
+  $('#pkgs').innerHTML = PACKAGES.length ? PACKAGES.map((p, i) => `
+    <div class="pkg reveal ${p.featured ? 'featured' : ''}" style="--d:${i * 0.04}s">
+      ${p.featured ? '<span class="tag">Popular</span>' : ''}
+      <p class="eyebrow">${esc(p.category)}</p>
+      <h3>${esc(p.name)}</h3>
+      <div class="price">฿${money0(p.price)} <small>/${p.isHourly ? 'ชั่วโมง' : 'งาน'}</small></div>
+      <ul>${(p.features || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+      <button class="btn ${p.featured ? '' : 'ghost'}" data-pick="${esc(p.id)}">เลือกแพ็กเกจนี้</button>
+    </div>`).join('') : '<p class="muted">ยังไม่มีแพ็กเกจ</p>';
+}
+$('#pkgs').addEventListener('click', e => {
+  const b = e.target.closest('[data-pick]'); if (!b) return;
+  const p = PKG(b.dataset.pick);
+  if (p) { $('#pkgCat').value = p.categoryId; renderPkgItems(); $('#pkgItem').value = p.id; handlePkgQty(); }
+  $('#booking').scrollIntoView({ behavior: 'smooth' });
+});
+
+function renderPkgItems() {
+  const catId = $('#pkgCat').value;
+  const cat = PACKAGE_CATS.find(c => c.id === catId);
+  $('#pkgItem').innerHTML = cat.items.map(i => `<option value="${esc(i.id)}">${esc(i.name)} — ฿${money0(i.price)}${i.isHourly ? '/ชม.' : ''}</option>`).join('');
+}
+function handlePkgQty() {
+  const p = PKG($('#pkgItem').value);
+  $('#hourWrap').hidden = !p.isHourly;
+  updateSummary();
+}
+
+function renderForm() {
+  $('#pkgCat').innerHTML = PACKAGE_CATS.map((c, i) => `<option value="${esc(c.id)}" ${i ? '' : 'selected'}>${esc(c.name)}</option>`).join('');
+  renderPkgItems();
+  $('#pkgCat').addEventListener('change', () => { renderPkgItems(); handlePkgQty(); });
+  $('#pkgItem').addEventListener('change', handlePkgQty);
+  $('#pkgQty').addEventListener('input', updateSummary);
+  $('#addonOpts').innerHTML = ADDONS.map(a => `<div class="opt"><input type="checkbox" name="addon" id="ad-${esc(a.id)}" value="${esc(a.id)}"><label for="ad-${esc(a.id)}">${esc(a.name)}<small>+฿${money0(a.price)}</small></label></div>`).join('');
+  $('#fDate').min = todayBKK();
+  renderSlots();
+}
+
+$('#applyPromoBtn').addEventListener('click', () => {
+  const code = $('#fPromo').value.trim();
+  if (!code) { appliedPromo = null; $('#promoHint').textContent = ''; updateSummary(); return; }
+  const found = api.promos.find(code);
+  if (!found) {
+    appliedPromo = null;
+    $('#promoHint').innerHTML = `<span style="color:var(--bad)">ไม่พบโค้ดส่วนลดนี้</span>`;
+  } else {
+    appliedPromo = found;
+    $('#promoHint').innerHTML = `<span style="color:var(--ok)">✓ ใช้โค้ด ${esc(found.code)} ลด ฿${money0(found.amount)}</span>`;
+  }
+  updateSummary();
+});
+
+function renderSlots() {
+  const d = $('#fDate').value, prev = ($('input[name=slot]:checked') || {}).value;
+  const blockedObj = d && busy.find(b => b.date === d && b.blocked);
+  $('#slotOpts').innerHTML = SLOTS.map(s => {
+    const taken = d && isTaken(busy, d, s.id);
+    return `<div class="opt"><input type="radio" name="slot" id="sl-${s.id}" value="${s.id}" ${(!d || taken) ? 'disabled' : ''} ${prev === s.id && !taken ? 'checked' : ''}><label for="sl-${s.id}">${s.label}<small>${taken ? 'ไม่ว่าง' : s.time}</small></label></div>`;
+  }).join('');
+  $('#slotHint').textContent = !d ? 'เลือกวันที่ก่อน แล้วช่วงเวลาที่ว่างจะกดได้' : (blockedObj ? `วันหยุดสตูดิโอ (${blockedObj.reason || 'งดรับคิว'})` : (SLOTS.every(s => isTaken(busy, d, s.id)) ? 'วันนี้คิวเต็มแล้ว กรุณาเลือกวันอื่น' : ''));
+}
+function formData() {
+  return { pkg: $('#pkgItem').value, pkgQty: Math.max(1, +$('#pkgQty').value || 1), addons: $$('input[name=addon]:checked').map(i => i.value),
+    date: $('#fDate').value, slot: ($('input[name=slot]:checked') || {}).value,
+    discount: appliedPromo ? appliedPromo.amount : 0, promoCode: appliedPromo ? appliedPromo.code : null };
+}
+function updateSummary() {
+  const f = formData(), p = PKG(f.pkg);
+  if (!p) { $('#sumLines').innerHTML = '<p class="sum-dep">เลือกแพ็กเกจเพื่อดูราคา</p>'; return; }
+  const pkgTotal = p.price * (p.isHourly ? f.pkgQty : 1);
+  const lines = [[`${p.name}${p.isHourly ? ` ${f.pkgQty} ชั่วโมง` : ''}`, pkgTotal], ...f.addons.filter(ADDON).map(id => [ADDON(id).name, +ADDON(id).price])];
+  const subtotal = lines.reduce((t, [, v]) => t + v, 0);
+  const disc = Math.min(f.discount || 0, subtotal);
+  const total = Math.max(0, subtotal - disc);
+  let html = lines.map(([n, v], i) => `<div class="sum-line" style="animation-delay:${i * 0.04}s"><span>${esc(n)}</span><span>฿${money0(v)}</span></div>`).join('');
+  if (disc > 0) html += `<div class="sum-line disc-line"><span>ส่วนลด (${esc(f.promoCode)})</span><span>-฿${money0(disc)}</span></div>`;
+  if (f.date) html += `<div class="sum-line meta-line"><span>วันที่ ${thDate(f.date)}</span><span>${f.slot ? SLOT(f.slot).label : 'ยังไม่เลือกเวลา'}</span></div>`;
+  $('#sumLines').innerHTML = html;
+  $('#sumTotal').textContent = '฿' + money0(total);
+  $('#sumDep').innerHTML = `มัดจำ ${money0(DEPOSIT_AMOUNT)} บาท เพื่อยืนยันคิว <b>฿${money0(Math.min(DEPOSIT_AMOUNT, total))}</b>`;
+}
+$('#bookForm').addEventListener('change', e => { if (e.target.id === 'fDate') { $('#fDateWrap').classList.remove('err'); renderSlots(); } updateSummary(); });
+$('#bookForm').addEventListener('input', e => { const f = e.target.closest('.field'); if (f) f.classList.remove('err'); });
+$('#bookForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  $$('#bookForm .field.err').forEach(f => f.classList.remove('err'));
+  const f = formData(), name = $('#fName').value.trim(), phone = $('#fPhone').value.replace(/\D/g, ''), email = $('#fEmail').value.trim(), errs = [];
+  if (!f.date) errs.push('#fDate');
+  if (!name) errs.push('#fName');
+  if (!/^0\d{8,9}$/.test(phone)) errs.push('#fPhone');
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.push('#fEmail');
+  if (errs.length) { errs.forEach(s => $(s).closest('.field').classList.add('err')); $(errs[0]).scrollIntoView({ behavior: 'smooth', block: 'center' }); return toast('กรุณากรอกข้อมูลให้ครบถ้วน'); }
+  if (!f.pkg) return toast('กรุณาเลือกแพ็กเกจ');
+  if (!f.slot) { $('#slotOpts').scrollIntoView({ behavior: 'smooth', block: 'center' }); return toast('กรุณาเลือกช่วงเวลา'); }
+  const btn = $('#bookBtn'); busyBtn(btn, true, 'กำลังบันทึก');
+  try {
+    const b = await api.bookings.create({ ...f, name, phone, email, location: $('#fLoc').value.trim(), note: $('#fNote').value.trim() });
+    cache.set(b.id, b);
+    $('#bookForm').reset(); $('#pkgCat').selectedIndex = 0; appliedPromo = null; $('#promoHint').textContent = '';
+    renderPkgItems(); handlePkgQty(); updateSummary();
+    DocModal.open(b, 'quote', false);
+  } catch (err) { console.error(err); toast(errMsg(err)); }
+  finally { busyBtn(btn, false); refreshBusy(); }
+});
+
+const TH_M = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+let cal = parse(todayBKK()); cal.setDate(1); let selDay = null;
+function renderCal(anim = false) {
+  const y = cal.getFullYear(), m = cal.getMonth(), today = todayBKK();
+  $('#calTitle').textContent = `${TH_M[m]} ${y + 543}`;
+  const first = new Date(y, m, 1).getDay(), days = new Date(y, m + 1, 0).getDate();
+  let h = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'].map(d => `<div class="dow">${d}</div>`).join('') + '<div></div>'.repeat(first);
+  for (let d = 1; d <= days; d++) {
+    const s = iso(new Date(y, m, d)), past = s < today;
+    h += `<button type="button" class="day ${s === today ? 'today' : ''} ${past ? '' : dayState(busy, s)} ${s === selDay ? 'sel' : ''}" data-day="${s}" ${past ? 'disabled' : ''}>${d}</button>`;
+  }
+  $('#calGrid').innerHTML = h;
+  if (anim) { $('#calGrid').classList.remove('swap'); void $('#calGrid').offsetWidth; $('#calGrid').classList.add('swap'); }
+  if (selDay) showDay(selDay);
+}
+function showDay(s) {
+  const blockedObj = busy.find(b => b.date === s && b.blocked);
+  if (blockedObj) {
+    $('#dayInfo').innerHTML = `<h4>${thDate(s)}</h4><p class="muted small">งดรับคิว (${esc(blockedObj.reason || 'วันหยุดสตูดิโอ')})</p>`;
+    return;
+  }
+  $('#dayInfo').innerHTML = `<h4>${thDate(s)}</h4>` + SLOTS.map((sl, i) => {
+    const t = isTaken(busy, s, sl.id);
+    return `<div class="slot-row" style="animation-delay:${i * 0.05}s"><span>${sl.label} <small>${sl.time}</small></span><span class="badge ${t ? 's-cancelled' : 's-confirmed'}">${t ? 'ไม่ว่าง' : 'ว่าง'}</span></div>`;
+  }).join('') + (SLOTS.some(sl => !isTaken(busy, s, sl.id)) ? `<button class="btn sm" style="margin-top:12px" data-bookday="${s}">จองวันนี้ →</button>` : '<p class="muted small" style="margin-top:10px">วันนี้คิวเต็มแล้ว</p>');
+}
+$('#calGrid').addEventListener('click', e => { const d = e.target.closest('.day'); if (!d || d.disabled) return; selDay = d.dataset.day; renderCal(); });
+$('#calPrev').addEventListener('click', () => { cal.setMonth(cal.getMonth() - 1); renderCal(true); });
+$('#calNext').addEventListener('click', () => { cal.setMonth(cal.getMonth() + 1); renderCal(true); });
+$('#dayInfo').addEventListener('click', e => {
+  const b = e.target.closest('[data-bookday]'); if (!b) return;
+  $('#fDate').value = b.dataset.bookday; $('#fDateWrap').classList.remove('err'); renderSlots(); updateSummary();
+  $('#booking').scrollIntoView({ behavior: 'smooth' });
+});
+
+$('#lookupForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const code = $('#qCode').value.trim(), phone = $('#qPhone').value.replace(/\D/g, '');
+  if (!code || !phone) return toast('กรุณากรอกรหัสการจองและเบอร์โทร');
+  const btn = $('#qBtn'); busyBtn(btn, true, 'กำลังค้นหา');
+  try {
+    const b = api.bookings.lookup(code, phone);
+    if (!b) { $('#qResult').innerHTML = '<p class="empty">ไม่พบข้อมูลการจอง ตรวจสอบรหัสและเบอร์โทรอีกครั้ง</p>'; return; }
+    cache.set(b.id, b);
+    const st = STATUS[b.status] || STATUS.pending, s = SLOT(b.slot), due = dueOf(b);
+    $('#qResult').innerHTML = `<div class="bk-card">
+      <header><strong>${esc(b.id)}</strong><span class="badge ${st.c}">${st.t}</span></header>
+      <p>${esc(b.name)} · ${esc(b.items && b.items[0] ? b.items[0].d : '')}</p>
+      <p>${thDate(b.date)} · ${s.label} ${s.time}</p>
+      <p>ยอดรวม <b>฿${money(calc(b).total)}</b></p>
+      ${due && due.amount > 0 ? payBlock(PAY, { amount: due.amount, label: due.label, ref: b.id }) : ''}
+      ${b.status === 'pending' ? `<div class="acts" style="margin-top:12px"><button class="btn sm ok" data-pay="${esc(b.id)}">ชำระเงินมัดจำ →</button></div>` : ''}
+      ${b.delivery ? `<div class="links">
+        ${b.delivery.drive ? `<a href="${esc(b.delivery.drive)}" target="_blank">📁 Google Drive</a>` : ''}
+        ${b.delivery.photos ? `<a href="${esc(b.delivery.photos)}" target="_blank">🖼️ Google Photos</a>` : ''}
+      </div>${b.delivery.note ? `<p class="muted small" style="margin-top:8px">${esc(b.delivery.note)}</p>` : ''}` : ''}
+      <div class="acts" style="margin-top:12px">
+        <button class="btn sm ghost" data-doc="quote" data-id="${esc(b.id)}">ใบเสนอราคา</button>
+        <button class="btn sm ghost" data-doc="invoice" data-id="${esc(b.id)}">ใบแจ้งหนี้</button>
+      </div>
+    </div>`;
+  } catch (err) { console.error(err); toast(errMsg(err)); }
+  finally { busyBtn(btn, false); }
+});
+$('#qResult').addEventListener('click', e => {
+  const id = e.target.closest('[data-pay]')?.dataset.pay; if (!id) return;
+  const b = cache.get(id) || api.bookings.lookup(id, $('#qPhone').value.replace(/\D/g, ''));
+  if (b) { cache.set(id, b); openPayModal(b); }
+});
+
+/* =====================================================================
+   ADMIN DASHBOARD RENDER & ACTIONS
+   ===================================================================== */
+let adminList = [], dashQ = '', dashF = 'all', payDraft = { ...DEFAULT_PAY };
+
+function enterAdmin() {
+  $('#loginView').hidden = true; $('#dashView').hidden = true; $('#adminLoading').hidden = false;
+  setTimeout(() => {
+    $('#adminLoading').hidden = true;
+    if (api.admin.check()) showDash();
+    else { $('#loginView').hidden = false; $('#lEmail').focus(); }
+  }, 300);
+}
+function showDash() {
+  $('#loginView').hidden = true; $('#dashView').hidden = false;
+  $('#adminEmail').textContent = 'เข้าสู่ระบบเป็น ' + DEMO_ADMIN.email;
+  switchTab('dashboard'); loadAllAdmin();
+  fillPayForm(); renderGalleryManager(); renderScheduleTab(); fillDatabaseTab();
+}
+$('#loginForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = $('#loginBtn'); busyBtn(btn, true, 'กำลังเข้าสู่ระบบ'); $('#loginErr').textContent = '';
+  try {
+    api.admin.login($('#lEmail').value.trim(), $('#lPass').value);
+    $('#lPass').value = ''; showDash(); toast('เข้าสู่ระบบสำเร็จ');
+  } catch (err) { $('#loginErr').textContent = errMsg(err); }
+  finally { busyBtn(btn, false); }
+});
+$('#logoutBtn').addEventListener('click', () => { api.admin.logout(); adminList = []; toast('ออกจากระบบแล้ว'); enterAdmin(); });
+$('#refreshBtn').addEventListener('click', async () => {
+  const btn = $('#refreshBtn'); busyBtn(btn, true, 'กำลังรีเฟรช');
+  await initSyncData();
+  loadAllAdmin(); refreshBusy(); renderGallery(); fillPayForm(); renderScheduleTab(); fillDatabaseTab();
+  busyBtn(btn, false); toast('โหลดข้อมูลล่าสุดแล้ว');
+});
+
+function switchTab(name) {
+  $$('#adminTabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === name));
+  $$('.dash-tab').forEach(t => t.hidden = (t.id !== 'tab' + name.charAt(0).toUpperCase() + name.slice(1)));
+  window.scrollTo(0, 0);
+}
+$('#adminTabs').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) switchTab(b.dataset.tab); });
+
+function loadAllAdmin() {
+  adminList = api.bookings.list();
+  adminList.forEach(b => cache.set(b.id, b));
+  renderKPI(); renderDash(); renderDelivery();
+}
+
+function renderKPI() {
+  const today = todayBKK(), all = adminList, pending = all.filter(b => b.status === 'pending'),
+    confirmed = all.filter(b => b.status === 'confirmed'), done = all.filter(b => b.status === 'done'),
+    cancelled = all.filter(b => b.status === 'cancelled'), todayList = all.filter(b => b.date === today),
+    upcoming = all.filter(b => b.date > today && b.status !== 'cancelled' && b.status !== 'done').slice(0, 5),
+    revenue = done.concat(confirmed).reduce((t, b) => t + calc(b).total, 0);
+  $('#kpiGrid').innerHTML = `
+    <div class="kpi accent"><b>฿${money0(Math.round(revenue))}</b><span>รายได้รวม</span></div>
+    <div class="kpi"><b>${all.length}</b><span>คิวงานทั้งหมด</span></div>
+    <div class="kpi hl"><b>${pending.length}</b><span>รอชำระมัดจำ</span></div>
+    <div class="kpi"><b>${confirmed.length}</b><span>ยืนยันแล้ว</span></div>
+    <div class="kpi"><b>${done.length}</b><span>เสร็จสิ้น</span></div>
+    <div class="kpi"><b>${cancelled.length}</b><span>ยกเลิก</span></div>`;
+  $('#todayList').innerHTML = todayList.length ? todayList.map(b => `
+    <div class="mini-item"><div><strong>${esc(b.name)}</strong><small>${SLOT(b.slot).label} · ${esc((PKG(b.pkg) || {}).name || b.items[0].d)}</small></div><b>฿${money(calc(b).total)}</b></div>
+  `).join('') : '<p class="empty-state">ไม่มีคิวงานวันนี้</p>';
+  $('#upcomingList').innerHTML = upcoming.length ? upcoming.map(b => `
+    <div class="mini-item"><div><strong>${thDate(b.date)} · ${esc(b.name)}</strong><small>${SLOT(b.slot).label} · ${esc((PKG(b.pkg) || {}).name || b.items[0].d)}</small></div><span class="badge ${STATUS[b.status].c}">${STATUS[b.status].t}</span></div>
+  `).join('') : '<p class="empty-state">ไม่มีคิวงานเร็วๆ นี้</p>';
+  const statusTotals = ['pending', 'confirmed', 'done', 'cancelled'].map(k => all.filter(b => b.status === k).reduce((t, b) => t + calc(b).total, 0));
+  const max = Math.max(1, ...statusTotals);
+  const colors = ['#f59e0b','#7c5cff','#1f9d55','#e5484d'];
+  $('#revenueChart').innerHTML = statusTotals.map((v, i) => `
+    <div class="chart-bar" style="height:${Math.round((v / max) * 100)}%;background:${colors[i]}">
+      <span>฿${money0(Math.round(v))}</span>
+    </div>
+  `).join('');
+}
+
+function renderDash() {
+  const tabs = [['all', 'ทั้งหมด', adminList.length], ...Object.entries(STATUS).map(([k, v]) => [k, v.t, adminList.filter(b => b.status === k).length])];
+  $('#dashFilters').innerHTML = tabs.map(([k, t, n]) => `<button class="chip ${dashF === k ? 'on' : ''}" data-fs="${k}">${t} · ${n}</button>`).join('');
+  const kw = dashQ.trim().toLowerCase();
+  const shown = adminList.filter(b => (dashF === 'all' || b.status === dashF) && (!kw || [b.id, b.name, b.phone].some(x => String(x || '').toLowerCase().includes(kw))));
+  $('#dashBody').innerHTML = shown.length ? shown.map(b => `
+    <tr>
+      <td><strong>${esc(b.id)}</strong></td>
+      <td>${esc(b.name)}<br><small class="muted">${esc(b.phone)}</small></td>
+      <td>${thDate(b.date)}</td>
+      <td>${SLOT(b.slot).label}</td>
+      <td>${esc((PKG(b.pkg) || {}).category || '')} · ${esc((PKG(b.pkg) || {}).name || (b.items && b.items[0] ? b.items[0].d : b.pkg))}</td>
+      <td class="r">฿${money(calc(b).total)}</td>
+      <td><select class="${(STATUS[b.status] || {}).c || ''}" data-status="${esc(b.id)}">${Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${k === b.status ? 'selected' : ''}>${v.t}</option>`).join('')}</select></td>
+      <td class="acts">
+        ${b.slip && b.slip.image ? `<button class="link-btn slip-btn" data-slip="${esc(b.id)}">ดูสลิป</button>` : ''}
+        <button class="link-btn" data-edit="${esc(b.id)}">แก้ไข</button>
+        <button class="link-btn" data-doc="quote" data-id="${esc(b.id)}" data-edit="1">QT</button>
+        <button class="link-btn" data-doc="invoice" data-id="${esc(b.id)}" data-edit="1">INV</button>
+        <button class="link-btn del" data-del="${esc(b.id)}">ลบ</button>
+      </td>
+    </tr>`).join('') : '<tr><td colspan="8" class="empty">ไม่มีรายการ</td></tr>';
+}
+$('#dashQ').addEventListener('input', e => { dashQ = e.target.value; renderDash(); });
+$('#dashFilters').addEventListener('click', e => { const b = e.target.closest('[data-fs]'); if (!b) return; dashF = b.dataset.fs; renderDash(); });
+$('#dashBody').addEventListener('change', async e => {
+  const id = e.target.dataset.status; if (!id) return;
+  const b = cache.get(id); if (!b) return;
+  const prev = b.status; b.status = e.target.value; e.target.disabled = true;
+  try { await api.bookings.update(id, { status: b.status }); toast('อัปเดตสถานะแล้ว'); loadAllAdmin(); refreshBusy(); }
+  catch (err) { b.status = prev; toast(errMsg(err)); }
+  finally { e.target.disabled = false; }
+});
+$('#dashBody').addEventListener('click', async e => {
+  const slipId = e.target.closest('[data-slip]')?.dataset.slip;
+  if (slipId) { openViewSlip(slipId); return; }
+  const editId = e.target.closest('[data-edit]')?.dataset.edit;
+  if (editId) { openEditBooking(editId); return; }
+  const id = e.target.closest('[data-del]')?.dataset.del; if (!id) return;
+  if (!confirm(`ลบการจอง ${id} ใช่หรือไม่?`)) return;
+  try {
+    await api.bookings.remove(id);
+    adminList = adminList.filter(b => b.id !== id); cache.delete(id);
+    loadAllAdmin(); refreshBusy(); toast('ลบแล้ว');
+  } catch (err) { toast(errMsg(err)); }
+});
+DocModal.onPatch = async b => {
+  renderDash();
+  try { await api.bookings.update(b.id, { discount: b.discount, vat: b.vat, provider: b.provider }); }
+  catch (err) { toast(errMsg(err)); }
+};
+
+function openViewSlip(id) {
+  const b = adminList.find(x => x.id === id) || cache.get(id);
+  if (!b || !b.slip) return toast('ไม่พบข้อมูลสลิป');
+  $('#vsTitle').textContent = `สลิปโอนเงิน · ${b.id}`;
+  $('#vsBody').innerHTML = `
+    <img src="${b.slip.image}" alt="Slip" style="max-height:55vh;margin:0 auto 12px;border-radius:12px;border:1px solid var(--line)">
+    <p class="small"><b>ลูกค้า:</b> ${esc(b.name)} (${esc(b.phone)})</p>
+    ${b.slip.at ? `<p class="small muted">เวลาแจ้งโอน: ${new Date(b.slip.at).toLocaleString('th-TH')}</p>` : ''}
+    ${b.slip.note ? `<p class="small" style="margin-top:6px;background:var(--bg);padding:8px 12px;border-radius:8px">${esc(b.slip.note)}</p>` : ''}
+  `;
+  openModal('#viewSlipModal');
+}
+
+/* Export CSV */
+$('#exportCsvBtn').addEventListener('click', () => {
+  if (!adminList.length) return toast('ไม่มีข้อมูลสำหรับส่งออก');
+  const headers = ['รหัสการจอง','วันที่สร้าง','ชื่อลูกค้า','เบอร์โทร','อีเมล','วันที่ถ่าย','ช่วงเวลา','แพ็กเกจ','สถานที่','ส่วนลด','ยอดรวมสุทธิ','สถานะ'];
+  const rows = adminList.map(b => [
+    b.id, b.created_at, b.name, b.phone, b.email || '', b.date, SLOT(b.slot).label,
+    (PKG(b.pkg) || {}).name || b.pkg, b.location || '', calc(b).discount, calc(b).total, (STATUS[b.status] || {}).t || b.status
+  ]);
+  const csv = '\uFEFF' + [headers, ...rows].map(r => r.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `toygallery-bookings-${todayBKK()}.csv`;
+  a.click(); toast('ดาวน์โหลดไฟล์ CSV แล้ว');
+});
+
+/* Schedule & Promos Tab */
+function renderScheduleTab() {
+  const blocks = api.blocks.load().sort((a, b) => a.date.localeCompare(b.date));
+  $('#blockList').innerHTML = blocks.length ? blocks.map((bl, i) => `
+    <div class="mini-item">
+      <div><strong>${thDate(bl.date)}</strong><small>${esc(bl.reason || 'งดรับคิว')}</small></div>
+      <button class="link-btn del" data-del-block="${i}">ปลดล็อก</button>
+    </div>
+  `).join('') : '<p class="empty-state">ยังไม่มีวันหยุดที่ล็อกไว้</p>';
+
+  const promos = api.promos.load();
+  $('#promoList').innerHTML = promos.length ? promos.map((p, i) => `
+    <div class="mini-item">
+      <div><strong>${esc(p.code)}</strong><small>ส่วนลด ฿${money0(p.amount)}</small></div>
+      <button class="link-btn del" data-del-promo="${i}">ลบโค้ด</button>
+    </div>
+  `).join('') : '<p class="empty-state">ยังไม่มีโค้ดส่วนลด</p>';
+}
+$('#blockForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const date = $('#blkDate').value, reason = $('#blkReason').value.trim();
+  if (!date) return;
+  const list = api.blocks.load().filter(x => x.date !== date);
+  list.push({ date, reason });
+  await api.blocks.save(list);
+  $('#blockForm').reset(); renderScheduleTab(); refreshBusy(); toast('ล็อกวันหยุดเรียบร้อย');
+});
+$('#blockList').addEventListener('click', async e => {
+  const idx = e.target.closest('[data-del-block]')?.dataset.delBlock; if (idx == null) return;
+  const list = api.blocks.load().sort((a, b) => a.date.localeCompare(b.date));
+  list.splice(+idx, 1); await api.blocks.save(list); renderScheduleTab(); refreshBusy(); toast('ปลดล็อกวันแล้ว');
+});
+$('#promoForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const code = $('#prmCode').value.trim().toUpperCase(), amount = Math.max(1, +$('#prmAmt').value || 0);
+  if (!code || !amount) return;
+  const list = api.promos.load().filter(x => x.code.toUpperCase() !== code);
+  list.push({ code, amount });
+  await api.promos.save(list);
+  $('#promoForm').reset(); renderScheduleTab(); toast('เพิ่มโค้ดส่วนลดแล้ว');
+});
+$('#promoList').addEventListener('click', async e => {
+  const idx = e.target.closest('[data-del-promo]')?.dataset.delPromo; if (idx == null) return;
+  const list = api.promos.load(); list.splice(+idx, 1); await api.promos.save(list); renderScheduleTab(); toast('ลบโค้ดส่วนลดแล้ว');
+});
+
+/* Edit Booking Modal */
+function openEditBooking(id) {
+  const b = adminList.find(x => x.id === id); if (!b) return;
+  $('#editId').value = id; $('#editTitle').textContent = 'แก้ไข · ' + id;
+  $('#editName').value = b.name || '';
+  $('#editPhone').value = b.phone || '';
+  $('#editEmail').value = b.email || '';
+  $('#editLoc').value = b.location || '';
+  $('#editDate').value = b.date || '';
+  $('#editSlot').innerHTML = SLOTS.map(s => `<option value="${s.id}" ${s.id === b.slot ? 'selected' : ''}>${s.label} ${s.time}</option>`).join('');
+  const p = PKG(b.pkg);
+  $('#editPkgCat').innerHTML = PACKAGE_CATS.map(c => `<option value="${c.id}" ${c.id === (p && p.categoryId) ? 'selected' : ''}>${c.name}</option>`).join('');
+  renderEditPkgItems();
+  if (p) $('#editPkgItem').value = b.pkg;
+  $('#editPkgQty').value = b.pkgQty || 1;
+  $('#editHourWrap').hidden = !(p && p.isHourly);
+  $('#editAddons').innerHTML = ADDONS.map(a => `
+    <div class="opt"><input type="checkbox" name="editAddon" id="eda-${a.id}" value="${a.id}" ${b.addons && b.addons.includes(a.id) ? 'checked' : ''}>
+    <label for="eda-${a.id}">${a.name}<small>+฿${money0(a.price)}</small></label></div>
+  `).join('');
+  $('#editStatus').innerHTML = Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${k === b.status ? 'selected' : ''}>${v.t}</option>`).join('');
+  $('#editNote').value = b.note || '';
+  openModal('#editBookingModal');
+}
+function handleEditHour() { $('#editHourWrap').hidden = !PKG($('#editPkgItem').value).isHourly; }
+$('#editPkgCat').addEventListener('change', () => { renderEditPkgItems(); handleEditHour(); });
+$('#editPkgItem').addEventListener('change', handleEditHour);
+$('#editSave').addEventListener('click', async () => {
+  const id = $('#editId').value;
+  const pkg = $('#editPkgItem').value, pkgQty = Math.max(1, +$('#editPkgQty').value || 1);
+  const addons = $$('input[name=editAddon]:checked').map(i => i.value);
+  const patch = {
+    name: $('#editName').value.trim(),
+    phone: $('#editPhone').value.replace(/\D/g,''),
+    email: $('#editEmail').value.trim() || null,
+    location: $('#editLoc').value.trim() || null,
+    date: $('#editDate').value,
+    slot: $('#editSlot').value,
+    pkg, pkgQty, addons,
+    status: $('#editStatus').value,
+    note: $('#editNote').value.trim() || null,
+    items: buildItems(pkg, pkgQty, addons)
+  };
+  if (!patch.name) return toast('กรุณากรอกชื่อ');
+  if (!/^0\d{8,9}$/.test(patch.phone)) return toast('เบอร์โทรไม่ถูกต้อง');
+  if (patch.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(patch.email)) return toast('อีเมลไม่ถูกต้อง');
+  try {
+    await api.bookings.update(id, patch);
+    const b = adminList.find(x => x.id === id); if (b) Object.assign(b, patch);
+    const c = cache.get(id); if (c) Object.assign(c, patch);
+    closeModal('#editBookingModal'); loadAllAdmin(); refreshBusy(); toast('บันทึกการแก้ไขแล้ว');
+  } catch (err) { toast(errMsg(err)); }
+});
+
+/* Delivery Tab */
+function renderDelivery() {
+  const list = adminList.filter(b => b.status !== 'cancelled').sort((a, b) => a.date.localeCompare(b.date));
+  $('#deliveryList').innerHTML = list.length ? list.map(b => {
+    const has = b.delivery && (b.delivery.drive || b.delivery.photos);
+    return `<div class="bk-card">
+      <header><strong>${esc(b.id)}</strong><span class="badge ${STATUS[b.status].c}">${STATUS[b.status].t}</span></header>
+      <p>${esc(b.name)} · ${thDate(b.date)} · ${SLOT(b.slot).label}</p>
+      <p class="muted small">${esc((PKG(b.pkg) || {}).name || b.items[0].d)}</p>
+      ${has ? `<div class="links">
+        ${b.delivery.drive ? `<a href="${esc(b.delivery.drive)}" target="_blank">📁 Google Drive</a>` : ''}
+        ${b.delivery.photos ? `<a href="${esc(b.delivery.photos)}" target="_blank">🖼️ Google Photos</a>` : ''}
+      </div>${b.delivery.note ? `<p class="muted small" style="margin-top:6px">${esc(b.delivery.note)}</p>` : ''}` : '<p class="muted small" style="margin-top:6px">ยังไม่ได้ส่งงาน</p>'}
+      <div class="acts" style="margin-top:10px"><button class="btn sm ${has ? 'ghost' : ''}" data-delivery="${esc(b.id)}">${has ? 'แก้ไขลิงก์' : 'ส่งงาน'}</button></div>
+    </div>`;
+  }).join('') : '<p class="empty-state">ไม่มีคิวงาน</p>';
+}
+$('#deliveryList').addEventListener('click', e => {
+  const id = e.target.closest('[data-delivery]')?.dataset.delivery; if (!id) return;
+  const b = adminList.find(x => x.id === id); if (!b) return;
+  $('#delId').value = id;
+  $('#delTitle').textContent = 'ส่งงาน · ' + id;
+  $('#delDrive').value = b.delivery?.drive || '';
+  $('#delPhotos').value = b.delivery?.photos || '';
+  $('#delNote').value = b.delivery?.note || '';
+  openModal('#deliveryModal');
+});
+$('#delForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const id = $('#delId').value, drive = $('#delDrive').value.trim(), photos = $('#delPhotos').value.trim(), note = $('#delNote').value.trim();
+  if (!drive && !photos) return toast('กรุณาใส่ลิงก์อย่างน้อย 1 ลิงก์');
+  const btn = $('#delSave'); busyBtn(btn, true, 'กำลังบันทึก');
+  try {
+    const deliveryData = { drive, photos, note };
+    await api.bookings.update(id, { delivery: deliveryData });
+    const b = adminList.find(x => x.id === id); if (b) { b.delivery = deliveryData; cache.set(id, b); }
+    toast('บันทึกลิงก์ส่งงานแล้ว'); closeModal('#deliveryModal'); renderDelivery();
+  } catch (err) { toast(errMsg(err)); }
+  finally { busyBtn(btn, false); }
+});
+
+/* Gallery & Payment */
+function fillPayForm() {
+  payDraft = { ...PAY };
+  $('#pBank').value = payDraft.bankName || ''; $('#pAccNo').value = payDraft.accountNo || '';
+  $('#pAccName').value = payDraft.accountName || ''; $('#pPP').value = payDraft.promptpay || '';
+  $('#pNote').value = payDraft.note || '';
+  renderQr('#qrThumb', payDraft.qr); renderPayPreview();
+}
+function renderPayPreview() { $('#payPreview').innerHTML = payBlock(payDraft, { amount: DEPOSIT_AMOUNT, label: 'ตัวอย่าง · ค่ามัดจำ', ref: 'BK-XXXXXX-XXXXXX' }); }
+
+$('#gmAddUrl').addEventListener('click', async () => {
+  const title = $('#gmTitle').value.trim(), cat = $('#gmCat').value, url = $('#gmUrl').value.trim();
+  if (!title) return toast('กรุณาใส่ชื่อผลงาน');
+  if (!url) return toast('กรุณาใส่ลิงก์รูปภาพ');
+  WORKS.push({ id: 'gw-' + Date.now(), c: cat, t: title, src: url });
+  await api.gallery.save(WORKS);
+  renderGalleryManager(); renderGallery();
+  $('#gmTitle').value = ''; $('#gmUrl').value = '';
+  toast('เพิ่มผลงานจากลิงก์แล้ว');
+});
+function renderGalleryManager() {
+  WORKS = api.gallery.load();
+  $('#gmList').innerHTML = WORKS.length ? WORKS.map((w, i) => `
+    <div class="gm-item">
+      <button class="del" data-gm-del="${i}" aria-label="ลบ">✕</button>
+      <img src="${esc(w.src)}" alt="${esc(w.t)}">
+      <div class="info"><b>${esc(w.t)}</b><span class="muted">${CATS[w.c]}</span></div>
+    </div>
+  `).join('') : '<p class="empty-state" style="grid-column:1/-1">ยังไม่มีผลงาน</p>';
+}
+$('#gmList').addEventListener('click', async e => {
+  const idx = e.target.closest('[data-gm-del]')?.dataset.gmDel; if (idx == null) return;
+  if (!confirm('ลบผลงานนี้ใช่หรือไม่?')) return;
+  WORKS.splice(+idx, 1); await api.gallery.save(WORKS);
+  renderGalleryManager(); renderGallery(); toast('ลบผลงานแล้ว');
+});
+
+$('#payForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const p = {
+    bankName: $('#pBank').value.trim(),
+    accountNo: $('#pAccNo').value.trim(),
+    accountName: $('#pAccName').value.trim(),
+    promptpay: $('#pPP').value.trim(),
+    qr: payDraft.qr || '',
+    note: $('#pNote').value.trim()
+  };
+  await api.pay.save(p);
+  PAY = { ...p }; toast('บันทึกบัญชีรับเงินแล้ว');
+});
+
+function fillDatabaseTab() {
+  $('#cfgLegal').value = STUDIO.legal || '';
+  $('#cfgPhone').value = STUDIO.phone || '';
+  $('#cfgEmail').value = STUDIO.email || '';
+  $('#cfgTax').value = STUDIO.taxId || '';
+  $('#cfgAddr').value = STUDIO.address || '';
+  $('#cfgAdminEmail').value = DEMO_ADMIN.email || '';
+  $('#cfgAdminPass').value = DEMO_ADMIN.password || '';
+}
+$('#studioConfigForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const studio = {
+    name: STUDIO.name,
+    legal: $('#cfgLegal').value.trim(),
+    phone: $('#cfgPhone').value.trim(),
+    email: $('#cfgEmail').value.trim(),
+    taxId: $('#cfgTax').value.trim(),
+    address: $('#cfgAddr').value.trim()
+  };
+  const admin = {
+    email: $('#cfgAdminEmail').value.trim(),
+    password: $('#cfgAdminPass').value
+  };
+  if (!admin.email || !admin.password) return toast('กรุณากรอกอีเมลและรหัสผ่าน Admin');
+  await api.config.save(studio, admin);
+  $('#footContact').textContent = `${STUDIO.email} · ${STUDIO.phone}`;
+  $('#adminEmail').textContent = 'เข้าสู่ระบบเป็น ' + DEMO_ADMIN.email;
+  toast('บันทึกการตั้งค่าระบบเรียบร้อยแล้ว');
+});
+
+/* =====================================================================
+   ROUTING & GLOBAL EVENTS
+   ===================================================================== */
+let route = null;
+function applyRoute() {
+  const h = decodeURIComponent(location.hash.slice(1)), admin = h === 'admin';
+  if (route !== admin) {
+    route = admin;
+    $('#clientView').hidden = admin; $('#adminView').hidden = !admin;
+    document.body.classList.toggle('is-admin', admin);
+    if (admin) enterAdmin(); else { $('#loginView').hidden = true; $('#dashView').hidden = true; }
+  }
+  if (!admin && h && document.getElementById(h)) requestAnimationFrame(() => document.getElementById(h).scrollIntoView({ behavior: 'smooth' }));
+}
+window.addEventListener('hashchange', applyRoute);
+
+document.addEventListener('click', e => {
+  const cp = e.target.closest('[data-copy]'); if (cp) { copyText(cp.dataset.copy); return; }
+  const d = e.target.closest('[data-doc]');
+  if (d) {
+    let b = cache.get(d.dataset.id);
+    if (!b) b = adminList.find(x => x.id === d.dataset.id);
+    if (!b) { const all = api.bookings.list(); b = all.find(x => x.id === d.dataset.id); }
+    if (b) { cache.set(b.id, b); DocModal.open(b, d.dataset.doc, d.dataset.edit === '1'); }
+    return;
+  }
+  if (e.target.closest('[data-close]') || e.target.classList.contains('modal')) {
+    const m = e.target.closest('.modal'); if (m) closeModal('#' + m.id);
+  }
+});
+document.addEventListener('keydown', e => {
+  if ($('#lb').classList.contains('open')) {
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowRight') lbMove(1); if (e.key === 'ArrowLeft') lbMove(-1);
+    return;
+  }
+  if (e.key === 'Escape') $$('.modal.open').forEach(m => closeModal('#' + m.id));
+});
+
+const menu = $('#menu'), burger = $('#burger');
+burger.addEventListener('click', () => { const on = menu.classList.toggle('open'); burger.classList.toggle('on', on); burger.setAttribute('aria-expanded', on); });
+menu.addEventListener('click', e => { if (e.target.closest('a')) { menu.classList.remove('open'); burger.classList.remove('on'); } });
+document.addEventListener('click', e => { if (!e.target.closest('#nav')) { menu.classList.remove('open'); burger.classList.remove('on'); } });
+
+let ticking = false;
+function onScroll() {
+  if (ticking) return; ticking = true;
+  requestAnimationFrame(() => {
+    const y = window.scrollY || 0;
+    $('#nav').classList.toggle('scrolled', y > 30);
+    const hb = $('#heroBg'); if (hb && route === false && y < innerHeight) hb.style.transform = `translate3d(0,${y * 0.25}px,0)`;
+    const bk = $('#booking')?.getBoundingClientRect();
+    $('#fab').classList.toggle('show', route === false && y > innerHeight * 0.6 && !(bk && bk.top < innerHeight && bk.bottom > 0));
+    ticking = false;
+  });
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+
+function countUp(el) {
+  const end = +el.dataset.count, dec = +el.dataset.dec || 0, plus = el.dataset.plus, t0 = performance.now(), dur = 1500;
+  const step = t => {
+    const p = Math.min((t - t0) / dur, 1), v = end * (1 - Math.pow(1 - p, 4));
+    el.textContent = (dec ? v.toFixed(dec) : Math.round(v)) + (plus && p === 1 ? '+' : '');
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => entries.forEach(en => {
+  if (!en.isIntersecting) return;
+  en.target.classList.add('in'); io.unobserve(en.target);
+  $$('[data-count]', en.target).forEach(countUp);
+}), { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }) : null;
+function observeReveals() { $$('.reveal:not(.in)').forEach(el => io ? io.observe(el) : el.classList.add('in')); }
+
+/* Initialize App */
+(async function init() {
+  await initSyncData();
+  $('#footContact').textContent = `${STUDIO.email} · ${STUDIO.phone}`;
+  renderGallery(); renderPackages(); renderForm(); updateSummary(); renderCal(); observeReveals();
+  refreshBusy();
+  document.body.classList.add('ready');
+  applyRoute();
+})();
+</script>
+</body>
 </html>
